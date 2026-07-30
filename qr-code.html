@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>扫码打开工作台</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'PingFang SC',sans-serif;
+  background:linear-gradient(135deg,#fdf2f8,#fff1f2,#fdf2f8);
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+}
+.card{
+  background:#fff; border-radius:24px; padding:40px 48px; text-align:center;
+  box-shadow:0 8px 40px rgba(236,72,153,.15); border:1px solid #fce7f3;
+}
+.icon{font-size:48px; margin-bottom:8px;}
+.title{font-size:22px; font-weight:700; color:#db2777; margin-bottom:6px;}
+.subtitle{font-size:13px; color:#9d6b7f; margin-bottom:24px;}
+.qr{margin:0 auto 24px; border-radius:16px; overflow:hidden; border:3px solid #fbcfe8;}
+.link{
+  font-size:12px; color:#c8a0b0; word-break:break-all; max-width:320px; margin:0 auto 20px;
+  padding:12px; background:#fdf2f8; border-radius:12px;
+}
+.steps{text-align:left; font-size:13px; color:#4a3340; line-height:2;}
+.steps b{color:#ec4899;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="icon">🌸</div>
+  <div class="title">扫码打开工作台</div>
+  <div class="subtitle">手机扫码即可使用，可添加到主屏幕</div>
+  <div class="qr">
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=https://8e23c5cdc39f434c92293d769178dae7.app.codebuddy.work&color=ec4899&bgcolor=ffffff" width="240" height="240" alt="QR Code">
+  </div>
+  <div class="link">https://8e23c5cdc39f434c92293d769178dae7.app.codebuddy.work</div>
+  <div class="steps">
+    📱 <b>使用步骤：</b><br>
+    1. 用手机相机或浏览器扫码<br>
+    2. 打开后点击底部「分享」按钮<br>
+    3. 选择「添加到主屏幕」<br>
+    4. 像App一样随时打开使用 🌸
+  </div>
+</div>
+</body>
+</html>

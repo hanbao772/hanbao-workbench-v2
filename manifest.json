@@ -1,0 +1,24 @@
+{
+  "name": "汉堡的万能助手 - 我的可爱工作台",
+  "short_name": "汉堡的万能助手",
+  "description": "天蓝色可爱风格的个人成长工作台 - 英语学习、粤语学习、文案记录、锻炼、理财、播客、复盘等10大功能",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eff6ff",
+  "theme_color": "#38bdf8",
+  "lang": "zh-CN",
+  "dir": "ltr",
+  "categories": ["lifestyle", "productivity", "education"],
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" },
+    { "src": "apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    { "name": "每日打卡", "url": "./index.html#punch" },
+    { "name": "每日复盘", "url": "./index.html#review" }
+  ]
+}

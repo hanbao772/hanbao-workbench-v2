@@ -1,0 +1,10 @@
+# 本地服务相关(不进仓库)
+serve.py
+serve.log
+_publish/
+deploy.zip
+gen_qr.py
+.workbuddy/
+
+# 系统文件
+.DS_Store

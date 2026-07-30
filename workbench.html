@@ -1,0 +1,1739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="汉堡的万能助手">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#38bdf8">
+<link rel="manifest" href="manifest.json">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" href="favicon.png">
+<title>汉堡的万能助手 🍔</title>
+<style>
+/* ============ 全局样式 ============ */
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --sky-50:#eff6ff; --sky-100:#dbeafe; --sky-200:#bfdbfe; --sky-300:#93c5fd;
+  --sky-400:#38bdf8; --sky-500:#0ea5e9; --sky-600:#0284c7;
+  --rose-50:#f0f9ff; --rose-100:#e0f2fe; --rose-300:#7dd3fc;
+  --text-main:#1e3a52; --text-soft:#5b7e96; --text-light:#9bb8cc;
+  --white:#fff; --shadow:0 4px 20px rgba(56,189,248,.14);
+  --shadow-lg:0 8px 30px rgba(56,189,248,.20);
+  --radius:16px; --radius-sm:10px;
+}
+body{
+  font-family:'PingFang SC','Microsoft YaHei','Helvetica Neue',sans-serif;
+  background:linear-gradient(135deg,#eff6ff 0%,#e0f2fe 50%,#eff6ff 100%);
+  color:var(--text-main); min-height:100vh; display:flex;
+}
+::-webkit-scrollbar{width:8px;height:8px;}
+::-webkit-scrollbar-track{background:var(--sky-50);}
+::-webkit-scrollbar-thumb{background:var(--sky-200);border-radius:8px;}
+::-webkit-scrollbar-thumb:hover{background:var(--sky-300);}
+
+/* ============ 左侧导航栏 ============ */
+.sidebar{
+  width:220px; min-height:100vh; background:rgba(255,255,255,.75);
+  backdrop-filter:blur(20px); border-right:1px solid var(--sky-100);
+  display:flex; flex-direction:column; padding:20px 0; position:fixed;
+  left:0; top:0; z-index:100; box-shadow:2px 0 20px rgba(56,189,248,.06);
+}
+.logo{
+  text-align:center; padding:10px 20px 24px; border-bottom:2px dashed var(--sky-100);
+  margin-bottom:12px;
+}
+.logo-icon{font-size:36px; display:block; margin-bottom:6px;}
+.logo-title{font-size:18px; font-weight:700; color:var(--sky-600); letter-spacing:1px;}
+.logo-sub{font-size:11px; color:var(--text-light); margin-top:2px;}
+
+.nav-list{flex:1; overflow-y:auto; padding:0 12px;}
+.nav-item{
+  display:flex; align-items:center; gap:12px; padding:12px 14px; margin-bottom:4px;
+  border-radius:var(--radius-sm); cursor:pointer; transition:all .25s ease;
+  color:var(--text-soft); font-size:14px; font-weight:500; position:relative;
+}
+.nav-item:hover{background:var(--sky-50); color:var(--sky-500); transform:translateX(3px);}
+.nav-item.active{
+  background:linear-gradient(135deg,var(--sky-100),var(--rose-100));
+  color:var(--sky-600); font-weight:600; box-shadow:var(--shadow);
+}
+.nav-item.active::before{
+  content:''; position:absolute; left:-12px; top:50%; transform:translateY(-50%);
+  width:4px; height:24px; background:var(--sky-400); border-radius:0 4px 4px 0;
+}
+.nav-icon{font-size:20px; width:28px; text-align:center; flex-shrink:0;}
+.nav-badge{
+  margin-left:auto; font-size:10px; background:var(--sky-400); color:#fff;
+  padding:2px 7px; border-radius:10px; min-width:20px; text-align:center;
+}
+
+/* ============ 主内容区 ============ */
+.main{margin-left:220px; flex:1; padding:24px 32px; min-height:100vh;}
+
+/* === 顶部桌面区域 === */
+.dashboard{
+  display:grid; grid-template-columns:1fr 1fr 1.2fr; gap:20px; margin-bottom:24px;
+}
+.card{
+  background:rgba(255,255,255,.8); backdrop-filter:blur(10px); border-radius:var(--radius);
+  padding:24px; box-shadow:var(--shadow); border:1px solid rgba(191,219,254,.5);
+  transition:transform .3s, box-shadow .3s;
+}
+.card:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg);}
+.card-title{font-size:13px; color:var(--text-soft); margin-bottom:12px; display:flex; align-items:center; gap:6px;}
+
+/* 时间卡片 */
+.time-card{
+  background:linear-gradient(135deg,var(--sky-400),var(--sky-500));
+  color:#fff; display:flex; flex-direction:column; justify-content:center; align-items:center;
+  position:relative; overflow:hidden;
+}
+.time-card::before{content:'🍔'; position:absolute; top:-10px; right:-5px; font-size:60px; opacity:.15;}
+.time-card::after{content:'🌊'; position:absolute; bottom:-15px; left:-5px; font-size:50px; opacity:.15;}
+.clock{font-size:42px; font-weight:700; letter-spacing:2px; font-variant-numeric:tabular-nums;}
+.date{font-size:14px; margin-top:6px; opacity:.95;}
+.weekday{font-size:12px; margin-top:4px; opacity:.8;}
+
+/* 打卡卡片 */
+.punch-card{display:flex; flex-direction:column;}
+.punch-status{
+  display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;
+}
+.punch-count{font-size:32px; font-weight:700; color:var(--sky-500);}
+.punch-label{font-size:12px; color:var(--text-soft);}
+.punch-streak{font-size:12px; color:var(--sky-500); background:var(--sky-50); padding:4px 10px; border-radius:20px;}
+.punch-btn{
+  width:100%; padding:12px; border:none; border-radius:var(--radius-sm);
+  background:linear-gradient(135deg,var(--sky-300),var(--sky-400)); color:#fff;
+  font-size:15px; font-weight:600; cursor:pointer; transition:all .25s; margin-top:auto;
+}
+.punch-btn:hover{transform:scale(1.02); box-shadow:0 4px 15px rgba(56,189,248,.3);}
+.punch-btn.done{background:var(--sky-100); color:var(--sky-500); cursor:default;}
+.punch-emoji{font-size:48px; text-align:center; margin:8px 0;}
+
+/* 激励语卡片 */
+.quote-card{
+  background:linear-gradient(135deg,var(--rose-100),var(--sky-100));
+  display:flex; flex-direction:column; justify-content:center;
+}
+.quote-icon{font-size:28px; margin-bottom:8px;}
+.quote-cn{font-size:18px; font-weight:600; line-height:1.6; color:var(--text-main); margin-bottom:8px;}
+.quote-en{font-size:13px; color:var(--text-soft); line-height:1.5; font-style:italic;}
+.quote-refresh{
+  margin-top:12px; font-size:12px; color:var(--sky-500); cursor:pointer;
+  display:inline-flex; align-items:center; gap:4px; align-self:flex-start;
+  transition:transform .3s;
+}
+.quote-refresh:hover{transform:rotate(180deg);}
+
+/* === 内容区域 === */
+.content-area{min-height:500px;}
+.page{display:none; animation:fadeIn .4s ease;}
+.page.active{display:block;}
+@keyframes fadeIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+
+.page-header{
+  display:flex; align-items:center; gap:12px; margin-bottom:20px;
+}
+.page-icon{font-size:32px;}
+.page-title{font-size:24px; font-weight:700; color:var(--text-main);}
+.page-desc{font-size:13px; color:var(--text-soft); margin-top:2px;}
+
+/* 统计行 */
+.stats-row{display:flex; gap:16px; margin-bottom:20px; flex-wrap:wrap;}
+.stat-mini{
+  background:rgba(255,255,255,.8); border-radius:var(--radius-sm); padding:14px 20px;
+  box-shadow:var(--shadow); border:1px solid rgba(191,219,254,.4); min-width:120px;
+}
+.stat-mini-value{font-size:24px; font-weight:700; color:var(--sky-500);}
+.stat-mini-label{font-size:11px; color:var(--text-soft); margin-top:2px;}
+
+/* 输入区 */
+.input-box{
+  display:flex; gap:10px; margin-bottom:16px; flex-wrap:wrap;
+}
+.input-box input, .input-box textarea, .input-box select{
+  flex:1; min-width:180px; padding:10px 14px; border:2px solid var(--sky-100);
+  border-radius:var(--radius-sm); font-size:14px; color:var(--text-main); background:#fff;
+  transition:border-color .25s; font-family:inherit;
+}
+.input-box input:focus, .input-box textarea:focus{outline:none; border-color:var(--sky-300);}
+.input-box textarea{resize:vertical; min-height:60px;}
+.btn-add{
+  padding:10px 20px; background:linear-gradient(135deg,var(--sky-300),var(--sky-400));
+  color:#fff; border:none; border-radius:var(--radius-sm); font-size:14px; font-weight:600;
+  cursor:pointer; transition:all .25s; white-space:nowrap;
+}
+.btn-add:hover{transform:scale(1.03); box-shadow:0 4px 12px rgba(56,189,248,.25);}
+
+/* 列表项 */
+.list-item{
+  display:flex; align-items:center; gap:12px; padding:14px 16px; background:rgba(255,255,255,.7);
+  border-radius:var(--radius-sm); margin-bottom:8px; box-shadow:var(--shadow);
+  border:1px solid rgba(191,219,254,.4); transition:all .25s;
+}
+.list-item:hover{transform:translateX(4px); border-color:var(--sky-200);}
+.list-item.done{opacity:.6;}
+.list-item.done .item-text{text-decoration:line-through; color:var(--text-light);}
+
+.item-check{
+  width:22px; height:22px; border:2px solid var(--sky-200); border-radius:50%;
+  cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+  transition:all .25s; font-size:13px;
+}
+.item-check.checked{background:var(--sky-400); border-color:var(--sky-400); color:#fff;}
+.item-text{flex:1; font-size:14px; color:var(--text-main);}
+.item-tag{
+  font-size:11px; padding:3px 10px; border-radius:20px; background:var(--sky-50);
+  color:var(--sky-500); white-space:nowrap;
+}
+.item-time{font-size:11px; color:var(--text-light); white-space:nowrap;}
+.item-del{
+  width:24px; height:24px; border:none; background:transparent; cursor:pointer;
+  font-size:16px; color:var(--text-light); border-radius:50%; transition:all .25s;
+}
+.item-del:hover{background:var(--rose-100); color:var(--sky-500);}
+
+.empty{
+  text-align:center; padding:40px; color:var(--text-light); font-size:14px;
+}
+.empty-icon{font-size:48px; margin-bottom:8px; opacity:.5;}
+
+/* 文案记录卡片 */
+.copy-card{
+  background:rgba(255,255,255,.85); border-radius:var(--radius-sm); padding:16px 18px;
+  margin-bottom:12px; box-shadow:var(--shadow); border:1px solid rgba(191,219,254,.4);
+  position:relative; transition:all .25s; border-left:4px solid var(--sky-400);
+}
+.copy-card:hover{transform:translateX(3px); box-shadow:var(--shadow-lg);}
+.copy-card.fav{border-left-color:#fbbf24; background:linear-gradient(135deg,#fffbeb,#eff6ff);}
+.copy-fav{
+  position:absolute; top:12px; right:14px; border:none; background:transparent;
+  font-size:20px; cursor:pointer; color:#fbbf24; transition:transform .2s; line-height:1;
+}
+.copy-fav:active{transform:scale(1.3);}
+.copy-text{font-size:15px; line-height:1.7; color:var(--text-main); white-space:pre-wrap; padding-right:28px;}
+.copy-src{font-size:12px; color:var(--sky-500); margin-top:8px; font-style:italic;}
+.copy-foot{display:flex; align-items:center; justify-content:space-between; margin-top:10px;}
+.copy-date{font-size:11px; color:var(--text-light);}
+
+/* 复盘卡片 */
+.review-card{
+  background:rgba(255,255,255,.8); border-radius:var(--radius); padding:20px;
+  margin-bottom:16px; box-shadow:var(--shadow); border:1px solid rgba(191,219,254,.4);
+}
+.review-label{font-size:13px; font-weight:600; color:var(--sky-500); margin-bottom:8px; display:flex; align-items:center; gap:6px;}
+.review-textarea{
+  width:100%; min-height:80px; padding:12px; border:2px solid var(--sky-100);
+  border-radius:var(--radius-sm); font-size:14px; resize:vertical; font-family:inherit;
+  color:var(--text-main); background:#fff;
+}
+.review-textarea:focus{outline:none; border-color:var(--sky-300);}
+.review-save{
+  margin-top:10px; padding:8px 18px; background:var(--sky-300); color:#fff;
+  border:none; border-radius:var(--radius-sm); cursor:pointer; font-size:13px; font-weight:600;
+  transition:all .25s;
+}
+.review-save:hover{background:var(--sky-400);}
+
+/* 进度条 */
+.progress-bar{
+  width:100%; height:8px; background:var(--sky-50); border-radius:10px; overflow:hidden; margin-top:8px;
+}
+.progress-fill{
+  height:100%; background:linear-gradient(90deg,var(--sky-300),var(--sky-500));
+  border-radius:10px; transition:width .5s ease;
+}
+
+/* 每日词汇卡片 */
+.daily-words{
+  background:linear-gradient(135deg,var(--sky-50),var(--rose-100));
+  border-radius:var(--radius); padding:16px 18px; margin-bottom:16px;
+  border:1px solid rgba(191,219,254,.5); box-shadow:var(--shadow);
+}
+.daily-words-title{
+  font-size:13px; font-weight:600; color:var(--sky-500); margin-bottom:12px;
+  display:flex; align-items:center; gap:6px; justify-content:space-between;
+}
+.daily-words-refresh{
+  font-size:12px; color:var(--sky-500); cursor:pointer; padding:2px 8px;
+  border:1px solid var(--sky-200); border-radius:12px; transition:all .2s;
+}
+.daily-words-refresh:active{background:var(--sky-200);}
+.dw-item{
+  display:flex; align-items:center; gap:10px; padding:9px 12px; background:rgba(255,255,255,.7);
+  border-radius:var(--radius-sm); margin-bottom:8px; border:1px solid rgba(191,219,254,.4);
+}
+.dw-word{font-size:15px; font-weight:700; color:var(--text-main); min-width:90px;}
+.dw-phonetic{font-size:12px; color:var(--text-soft); font-style:italic; flex:1;}
+.dw-mean{font-size:12px; color:var(--text-soft); margin-left:auto; max-width:40%;}
+.dw-speak{
+  width:30px; height:30px; border:none; background:var(--sky-100); border-radius:50%;
+  font-size:14px; cursor:pointer; color:var(--sky-500); flex-shrink:0; transition:all .2s;
+}
+.dw-speak:active{transform:scale(.9); background:var(--sky-300); color:#fff;}
+
+/* 卡路里统计条 */
+.kcal-summary{
+  background:linear-gradient(135deg,var(--sky-400),var(--sky-500)); color:#fff;
+  border-radius:var(--radius); padding:16px 18px; margin-bottom:16px; box-shadow:var(--shadow);
+  display:flex; align-items:center; justify-content:space-between;
+}
+.kcal-summary .kcal-num{font-size:28px; font-weight:700;}
+.kcal-summary .kcal-label{font-size:12px; opacity:.9; margin-top:2px;}
+.kcal-summary .kcal-icon{font-size:36px; opacity:.85;}
+
+/* 新闻获取 */
+.news-fetch-bar{
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin-bottom:16px;
+}
+.btn-fetch{
+  padding:12px 22px; background:linear-gradient(135deg,var(--sky-300),var(--sky-500));
+  color:#fff; border:none; border-radius:var(--radius-sm); font-size:15px; font-weight:600;
+  cursor:pointer; transition:all .25s; box-shadow:var(--shadow);
+}
+.btn-fetch:hover{transform:translateY(-2px); box-shadow:var(--shadow-lg);}
+.btn-fetch:active{transform:scale(.97);}
+.news-fetch-tip{font-size:12px; color:var(--text-soft);}
+.today-news{margin-bottom:8px;}
+.today-news-empty{
+  text-align:center; padding:24px; color:var(--text-light); font-size:13px;
+  background:rgba(255,255,255,.5); border-radius:var(--radius-sm); border:1px dashed var(--sky-200);
+}
+.tn-item{
+  background:rgba(255,255,255,.8); border-radius:var(--radius-sm); padding:14px 16px;
+  margin-bottom:10px; box-shadow:var(--shadow); border:1px solid rgba(191,219,254,.4);
+  border-left:4px solid var(--sky-400);
+}
+.tn-head{display:flex; align-items:center; gap:8px; margin-bottom:6px;}
+.tn-tag{
+  font-size:11px; padding:2px 9px; border-radius:12px; font-weight:600; flex-shrink:0;
+}
+.tn-tag.domestic{background:var(--sky-50); color:var(--sky-600);}
+.tn-tag.world{background:#e0f2fe; color:#0369a1;}
+.tn-title{font-size:14px; font-weight:600; color:var(--text-main); line-height:1.4;}
+.tn-summary{font-size:13px; color:var(--text-soft); line-height:1.6; margin-top:4px;}
+
+/* 提示 */
+.toast{
+  position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(0);
+  background:var(--sky-500); color:#fff; padding:12px 28px; border-radius:30px;
+  font-size:14px; font-weight:500; box-shadow:0 4px 20px rgba(56,189,248,.3);
+  z-index:9999; opacity:0; transition:all .35s ease;
+}
+.toast.show{transform:translateX(-50%) translateY(0); opacity:1;}
+
+/* ============ 安装为 App 引导横幅 ============ */
+.install-banner{
+  position:fixed; left:50%; bottom:80px; transform:translateX(-50%) translateY(200px);
+  width:min(92vw, 420px); background:rgba(255,255,255,.96); backdrop-filter:blur(16px);
+  border:1px solid var(--sky-200); border-radius:18px; box-shadow:0 10px 40px rgba(56,189,248,.22);
+  display:flex; align-items:center; gap:12px; padding:14px 16px; z-index:9998;
+  opacity:0; transition:all .4s cubic-bezier(.32,.72,0,1);
+}
+.install-banner.show{transform:translateX(-50%) translateY(0); opacity:1;}
+.install-icon{font-size:30px; flex-shrink:0;}
+.install-text{flex:1; min-width:0;}
+.install-title{font-size:14px; font-weight:700; color:var(--text-main);}
+.install-sub{font-size:11px; color:var(--text-soft); margin-top:2px; line-height:1.4;}
+.install-btn{
+  flex-shrink:0; border:none; background:linear-gradient(135deg,var(--sky-300),var(--sky-400));
+  color:#fff; font-size:13px; font-weight:600; padding:8px 16px; border-radius:12px; cursor:pointer;
+  transition:all .2s;
+}
+.install-btn:hover{transform:scale(1.04); box-shadow:0 4px 12px rgba(56,189,248,.3);}
+.install-close{
+  flex-shrink:0; width:24px; height:24px; border:none; background:transparent; cursor:pointer;
+  font-size:14px; color:var(--text-light); border-radius:50%;
+}
+.install-close:hover{background:var(--sky-50);}
+
+/* ============ 每日播客 ============ */
+.podcast-tags{display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;}
+.podcast-tag{
+  font-size:12px; padding:6px 14px; border-radius:20px; background:var(--sky-100);
+  color:var(--sky-600); font-weight:500; border:1px solid var(--sky-200);
+}
+
+.podcast-player-card{
+  background:linear-gradient(135deg,#1e293b 0%,#334155 100%);
+  border-radius:var(--radius); padding:24px; margin-bottom:22px;
+  color:#fff; box-shadow:0 10px 40px rgba(30,41,59,.35); position:relative; overflow:hidden;
+}
+.podcast-player-card::before{
+  content:''; position:absolute; top:-40px; right:-40px; width:160px; height:160px;
+  background:rgba(56,189,248,.12); border-radius:50%;
+}
+.podcast-player-card::after{
+  content:''; position:absolute; bottom:-30px; left:-30px; width:120px; height:120px;
+  background:rgba(125,211,252,.10); border-radius:50%;
+}
+.podcast-playing-badge{
+  display:inline-block; font-size:12px; padding:4px 12px; border-radius:20px;
+  background:rgba(56,189,248,.2); color:#7dd3fc; margin-bottom:16px; position:relative; z-index:1;
+}
+.podcast-cover{
+  width:110px; height:110px; border-radius:var(--radius); background:var(--sky-400);
+  display:flex; align-items:center; justify-content:center; font-size:52px; margin:0 auto 16px;
+  position:relative; z-index:1; box-shadow:0 8px 30px rgba(0,0,0,.25);
+}
+.podcast-title{
+  font-size:18px; font-weight:700; line-height:1.5; text-align:center; margin-bottom:8px;
+  position:relative; z-index:1; padding:0 10px;
+}
+.podcast-host{
+  font-size:13px; color:#94a3b8; text-align:center; margin-bottom:20px; position:relative; z-index:1;
+}
+.podcast-progress-wrap{position:relative; z-index:1; margin-bottom:10px;}
+.podcast-progress{
+  width:100%; height:6px; border-radius:10px; background:rgba(255,255,255,.15);
+  -webkit-appearance:none; appearance:none; cursor:pointer; outline:none;
+}
+.podcast-progress::-webkit-slider-thumb{
+  -webkit-appearance:none; width:16px; height:16px; border-radius:50%;
+  background:#38bdf8; box-shadow:0 2px 8px rgba(0,0,0,.3); margin-top:-5px;
+}
+.podcast-progress::-webkit-slider-runnable-track{height:6px; border-radius:10px; background:rgba(255,255,255,.15);}
+.podcast-time{
+  display:flex; justify-content:space-between; font-size:12px; color:#94a3b8; margin-top:6px;
+}
+.podcast-controls{
+  display:flex; align-items:center; justify-content:center; gap:28px; margin-top:18px;
+  position:relative; z-index:1;
+}
+.podcast-ctrl{
+  width:46px; height:46px; border-radius:50%; border:none; background:rgba(255,255,255,.12);
+  color:#fff; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
+  transition:all .2s;
+}
+.podcast-ctrl:hover{background:rgba(255,255,255,.2); transform:scale(1.05);}
+.podcast-ctrl.play{
+  width:64px; height:64px; background:var(--sky-400); font-size:24px;
+  box-shadow:0 6px 20px rgba(56,189,248,.35);
+}
+.podcast-ctrl.play:hover{background:var(--sky-300);}
+
+.podcast-section-title{
+  font-size:16px; font-weight:700; color:var(--text-main); margin-bottom:14px;
+  display:flex; align-items:center; justify-content:space-between;
+}
+.podcast-count{font-size:12px; color:var(--text-soft); font-weight:500;}
+.podcast-list{margin-bottom:20px;}
+.podcast-item{
+  display:flex; align-items:center; gap:14px; padding:14px 16px; background:rgba(255,255,255,.8);
+  border-radius:var(--radius-sm); margin-bottom:10px; box-shadow:var(--shadow);
+  border:1px solid rgba(191,219,254,.4); cursor:pointer; transition:all .25s;
+}
+.podcast-item:hover{transform:translateX(4px); box-shadow:var(--shadow-lg);}
+.podcast-item.playing{border:2px solid var(--sky-400); background:linear-gradient(135deg,#eff6ff,#fff);}
+.podcast-item-cover{
+  width:56px; height:56px; border-radius:12px; flex-shrink:0;
+  display:flex; align-items:center; justify-content:center; font-size:12px; color:#fff;
+  font-weight:700;
+}
+.podcast-item-info{flex:1; min-width:0;}
+.podcast-item-title{font-size:15px; font-weight:600; color:var(--text-main); line-height:1.4; margin-bottom:4px;}
+.podcast-item-meta{font-size:12px; color:var(--sky-500); margin-bottom:4px;}
+.podcast-item-desc{font-size:12px; color:var(--text-soft); line-height:1.5; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;}
+.podcast-item-play{
+  width:36px; height:36px; border-radius:50%; background:var(--sky-100); color:var(--sky-600);
+  display:flex; align-items:center; justify-content:center; font-size:14px; flex-shrink:0;
+}
+
+/* ============ 移动端顶部横向滚动标签栏 ============ */
+.mobile-header{
+  display:none; position:sticky; top:0; z-index:150;
+  background:rgba(239,246,255,.92); backdrop-filter:blur(20px);
+  padding:8px 0 calc(8px + env(safe-area-inset-top));
+  border-bottom:1px solid rgba(191,219,254,.4);
+}
+.mh-title-row{
+  display:flex; align-items:center; gap:8px; padding:0 16px 8px;
+}
+.mh-icon{font-size:20px;}
+.mh-title{font-size:16px; font-weight:700; color:var(--sky-600);}
+
+/* 顶部横向滚动标签栏 */
+.mobile-tabs{
+  display:flex; gap:8px; overflow-x:auto; -webkit-overflow-scrolling:touch;
+  padding:0 16px; scrollbar-width:none;
+}
+.mobile-tabs::-webkit-scrollbar{display:none;}
+.mt-item{
+  flex:0 0 auto; display:flex; align-items:center; gap:6px;
+  padding:8px 14px; border-radius:999px; cursor:pointer; white-space:nowrap;
+  color:var(--text-soft); font-size:14px; font-weight:500;
+  background:rgba(255,255,255,.6); border:1px solid rgba(191,219,254,.5);
+  transition:all .2s;
+}
+.mt-item:active{transform:scale(.95);}
+.mt-item.active{
+  background:linear-gradient(135deg,var(--sky-500),var(--rose-400));
+  color:#fff; font-weight:600; border-color:transparent;
+  box-shadow:0 4px 14px rgba(56,189,248,.35);
+}
+.mt-icon{font-size:16px;}
+.mt-badge{
+  font-size:10px; background:var(--sky-400); color:#fff;
+  padding:1px 7px; border-radius:10px; line-height:1.5;
+}
+.mt-item.active .mt-badge{background:rgba(255,255,255,.85); color:var(--sky-600);}
+
+/* ============ 响应式 ============ */
+
+/* 移动端布局：真正的窄屏手机 - 顶部横向标签栏导航 */
+@media(max-width:600px){
+  .sidebar{display:none !important;}
+  .mobile-header{display:block !important;}
+  .main{margin-left:0; padding:12px 14px 30px;}
+  .dashboard{grid-template-columns:1fr; gap:12px; margin-bottom:16px;}
+  .clock{font-size:36px;}
+  .card{padding:18px;}
+  .quote-cn{font-size:16px;}
+  .page-header{margin-bottom:14px;}
+  .page-title{font-size:20px;}
+  .page-icon{font-size:28px;}
+  .stats-row{gap:8px;}
+  .stat-mini{min-width:0; flex:1; padding:12px 10px; text-align:center;}
+  .stat-mini-value{font-size:20px;}
+  .stat-mini-label{font-size:10px;}
+  .input-box{gap:8px;}
+  .input-box input, .input-box select{min-width:0; font-size:16px; padding:9px 12px;}
+  .btn-add{width:100%; padding:11px; font-size:15px;}
+  .list-item{padding:12px 14px; gap:10px;}
+  .item-text{font-size:14px;}
+  .punch-emoji{font-size:40px;}
+  .punch-count{font-size:28px;}
+  .toast{bottom:30px;}
+  .review-card{padding:16px;}
+  .review-textarea{font-size:16px;}
+}
+
+/* 平板 / 中等宽度面板：保持左侧导航，桌面卡片纵向堆叠但导航可见 */
+@media(min-width:601px) and (max-width:900px){
+  .sidebar{display:flex; width:200px;}
+  .sidebar .logo-title{font-size:16px;}
+  .nav-item{font-size:13px; padding:11px 13px;}
+  .main{margin-left:200px; padding:20px 24px 40px;}
+  .dashboard{grid-template-columns:1fr 1fr;}
+  .quote-card{grid-column:1/-1;}
+  .clock{font-size:34px;}
+  .mobile-header{display:none !important;}
+}
+
+/* 大屏：完整桌面布局 */
+@media(min-width:901px){
+  .mobile-header{display:none !important;}
+  .sidebar{display:flex;}
+  .main{margin-left:220px; padding:24px 32px 60px;}
+  .dashboard{grid-template-columns:1fr 1fr 1.2fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ===== 移动端顶部栏（含横向滚动标签栏） ===== -->
+<header class="mobile-header">
+  <div class="mh-title-row">
+    <span class="mh-icon">🌸</span>
+    <span class="mh-title">汉堡的万能助手 🍔</span>
+  </div>
+  <nav class="mobile-tabs" id="mobileTabs"></nav>
+</header>
+
+<!-- ===== 左侧导航（大屏） ===== -->
+<nav class="sidebar">
+  <div class="logo">
+    <span class="logo-icon">🍔</span>
+    <div class="logo-title">汉堡的万能助手 🍔</div>
+    <div class="logo-sub">My Sweet Workspace</div>
+  </div>
+  <div class="nav-list" id="navList"></div>
+</nav>
+
+<!-- ===== 主内容 ===== -->
+<main class="main">
+  <!-- 顶部桌面 -->
+  <div class="dashboard">
+    <div class="card time-card">
+      <div class="clock" id="clock">00:00:00</div>
+      <div class="date" id="date"></div>
+      <div class="weekday" id="weekday"></div>
+    </div>
+    <div class="card punch-card">
+      <div class="card-title">📅 每日打卡</div>
+      <div class="punch-emoji" id="punchEmoji">🌼</div>
+      <div class="punch-status">
+        <div>
+          <div class="punch-count" id="punchCount">0</div>
+          <div class="punch-label">连续打卡天数</div>
+        </div>
+        <div class="punch-streak" id="punchStreak">今日未打卡</div>
+      </div>
+      <button class="punch-btn" id="punchBtn" onclick="doPunch()">🌷 今日打卡</button>
+    </div>
+    <div class="card quote-card">
+      <div class="quote-icon">💖</div>
+      <div class="quote-cn" id="quoteCn"></div>
+      <div class="quote-en" id="quoteEn"></div>
+      <span class="quote-refresh" onclick="refreshQuote()">🔄 换一句</span>
+    </div>
+  </div>
+
+  <!-- 内容区 -->
+  <div class="content-area" id="contentArea"></div>
+</main>
+
+<!-- ===== 移动端横向标签栏导航（已移入顶部 header） ===== -->
+
+<div class="toast" id="toast"></div>
+
+<!-- 添加到主屏幕 / 安装为 App 引导 -->
+<div class="install-banner" id="installBanner">
+  <div class="install-icon">🍔</div>
+  <div class="install-text">
+    <div class="install-title">添加到主屏幕</div>
+    <div class="install-sub">把「汉堡的万能助手」变成手机 App，随时打开~</div>
+  </div>
+  <button class="install-btn" id="installBtn">安装</button>
+  <button class="install-close" onclick="hideInstallBanner()">✕</button>
+</div>
+
+<script>
+// ============ 数据配置 ============
+const MENUS = [
+  {id:'english', icon:'📖', name:'英语学习', desc:'每日单词 · 句型 · 听力练习'},
+  {id:'cantonese', icon:'🦆', name:'粤语学习', desc:'日常用语 · 粤拼 · 对话练习'},
+  {id:'reading', icon:'✍️', name:'文案记录', desc:'灵感文案 · 好句收藏'},
+  {id:'exercise', icon:'🏃', name:'锻炼身体', desc:'运动打卡 · 健身记录'},
+  {id:'food', icon:'🍽️', name:'好好吃饭', desc:'三餐记录 · 饮食健康'},
+  {id:'finance', icon:'💰', name:'理财学习', desc:'收支记录 · 理财知识积累'},
+  {id:'work', icon:'📝', name:'工作计划', desc:'待办事项 · 任务管理'},
+  {id:'news', icon:'📰', name:'新闻热点', desc:'资讯收藏 · 热点追踪'},
+  {id:'drama', icon:'🎬', name:'新剧分享', desc:'追剧清单 · 观后感'},
+  {id:'podcast', icon:'🎙️', name:'每日播客', desc:'每日推荐 · 15分钟听世界'},
+  {id:'review', icon:'🌙', name:'每日复盘', desc:'今日总结 · 反思成长'},
+];
+
+const QUOTES = [
+  {cn:'你今天的努力，是幸运的伏笔。',en:"Today's effort is the prologue of tomorrow's luck."},
+  {cn:'慢慢来，比较快。',en:'Slow and steady wins the race.'},
+  {cn:'种一棵树最好的时间是十年前，其次是现在。',en:'The best time to plant a tree was 20 years ago. The second best time is now.'},
+  {cn:'星光不问赶路人，时光不负有心人。',en:"Stars don't question the traveler; time doesn't fail the determined."},
+  {cn:'你只管努力，剩下的交给时间。',en:'Just do your best, and let time do the rest.'},
+  {cn:'生活明朗，万物可爱，人间值得，未来可期。',en:'Life is bright, everything is lovely, the world is worth it, and the future is promising.'},
+  {cn:'每一个不曾起舞的日子，都是对生命的辜负。',en:'Every day not spent dancing is a betrayal of life.'},
+  {cn:'愿你成为自己的太阳，无需借谁的光。',en:"May you become your own sun, needing no one else's light."},
+  {cn:'温柔半两，从容一生。',en:'A little gentleness, a lifetime of composure.'},
+  {cn:'你未必光芒万丈，但始终温暖有光。',en:'You may not shine brightly, but you always glow with warmth.'},
+  {cn:'今日事今日毕，勿将今事待明日。',en:'Never put off till tomorrow what you can do today.'},
+  {cn:'心若有所向往，何惧道阻且长。',en:'If your heart has a direction, fear not the long and difficult road.'},
+  {cn:'热爱可抵岁月漫长。',en:'Passion can withstand the long years.'},
+  {cn:'保持热爱，奔赴山海。',en:'Keep your passion, run to the mountains and seas.'},
+  {cn:'所有的美好，都值得等待。',en:'All good things are worth waiting for.'},
+  {cn:'做自己的女王，不卑不亢不慌张。',en:'Be your own queen, neither humble nor arrogant.'},
+  {cn:'人生没有白走的路，每一步都算数。',en:'No step in life is wasted; every one counts.'},
+  {cn:'愿你眼里有光，心中有爱，脚下有路。',en:'May you have light in your eyes, love in your heart, and a path under your feet.'},
+  {cn:'把每一天当作生命的第一天。',en:'Treat every day as the first day of your life.'},
+  {cn:'小确幸是生活最大的温柔。',en:"Small certainties are life's greatest tenderness."},
+  {cn:'不念过往，不畏将来。',en:'Dwell not on the past, fear not the future.'},
+  {cn:'越努力越幸运。',en:'The harder you work, the luckier you get.'},
+  {cn:'生活不止眼前的苟且，还有诗和远方。',en:'Life is more than the present struggle; there is poetry and distant places.'},
+  {cn:'愿你历尽千帆，归来仍是少年。',en:'May you sail a thousand ships and return still a youth.'},
+  {cn:'每天进步一点点，就是最好的自己。',en:'A little progress each day makes the best version of you.'},
+  {cn:'记得给生活加一颗糖。',en:'Remember to add a piece of sugar to life.'},
+  {cn:'认真生活，就能找到被人生偷藏起来的糖果。',en:"Live earnestly, and you'll find the candies hidden by life."},
+  {cn:'你的温柔，要留给值得的人。',en:'Save your gentleness for those who deserve it.'},
+  {cn:'愿所有的美好都如约而至。',en:'May all good things arrive as promised.'},
+  {cn:'做一个温暖的人，浅浅笑，轻轻爱。',en:'Be a warm person, smile lightly, love gently.'},
+  {cn:'不管多远的路，只要走就一定能到达。',en:'No matter how far the road, you will arrive if you keep walking.'},
+  {cn:'今天也要元气满满鸭！',en:'Full of energy today too!'},
+];
+
+// ============ 食物卡路里库（每100g卡路里） ============
+const FOOD_KCAL = {
+  '米饭':116,'白粥':46,'馒头':223,'面条':110,'面包':265,'燕麦':367,'饺子':198,'包子':220,'煎饼':336,
+  '苹果':52,'香蕉':89,'橙子':47,'葡萄':43,'梨':44,'草莓':32,'西瓜':30,'桃子':39,'猕猴桃':61,'蓝莓':57,
+  '鸡胸肉':133,'鸡腿':181,'牛肉':250,'猪肉':395,'羊肉':203,'鱼肉':120,'虾':99,'鸡蛋':144,'鸭蛋':180,'豆腐':81,
+  '牛奶':54,'酸奶':72,'豆浆':31,'奶酪':328,'黄油':717,
+  '西兰花':34,'菠菜':23,'番茄':18,'黄瓜':16,'胡萝卜':41,'土豆':77,'红薯':99,'玉米':112,'南瓜':26,'生菜':15,'白菜':17,'茄子':25,
+  '食用油':899,'白糖':387,'巧克力':546,'饼干':433,'蛋糕':348,'冰淇淋':127,'奶茶':400,'可乐':43,'咖啡':2,'啤酒':43,
+  '坚果':600,'花生':567,'核桃':654,'腰果':553,'杏仁':579,
+  '牛肉面':120,'意大利面':158,'披萨':266,'汉堡':295,'炸鸡':300,'寿司':150,'沙拉':50,'麻辣烫':120,'螺蛳粉':123,'方便面':473,
+};
+
+// ============ 运动消耗库（每公斤体重每小时消耗卡路里） ============
+const EXERCISE_KCAL = {
+  '跑步':9.7,'快走':4.8,'慢跑':8.0,'游泳':8.3,'骑车':7.5,'跳绳':11.0,'瑜伽':3.0,'健身':6.0,
+  '舞蹈':5.5,'篮球':8.0,'足球':9.0,'羽毛球':6.5,'网球':7.3,'爬山':7.0,'俯卧撑':4.5,'平板支撑':3.5,
+  '深蹲':5.0,'椭圆机':6.5,'划船机':7.0,'太极':3.5,'散步':2.5,'爬楼梯':8.0,'核心训练':5.0,'普拉提':4.0,
+};
+
+// ============ 词汇库 ============
+const EN_WORDS = [
+  {word:'serendipity', phonetic:'/ˌserənˈdɪpəti/', mean:'意外发现的美好；机缘巧合'},
+  {word:'resilience', phonetic:'/rɪˈzɪliəns/', mean:'韧性；恢复力'},
+  {word:'gratitude', phonetic:'/ˈɡrætɪtjuːd/', mean:'感恩；感激'},
+  {word:'mindful', phonetic:'/ˈmaɪndfl/', mean:'正念的；留心的'},
+  {word:'bloom', phonetic:'/bluːm/', mean:'开花；绽放'},
+  {word:'serene', phonetic:'/səˈriːn/', mean:'宁静的；安详的'},
+  {word:'whisper', phonetic:'/ˈwɪspə(r)/', mean:'低语；耳语'},
+  {word:'radiant', phonetic:'/ˈreɪdiənt/', mean:'容光焕发的；光芒四射的'},
+  {word:'gentle', phonetic:'/ˈdʒentl/', mean:'温柔的；温和的'},
+  {word:'cosy', phonetic:'/ˈkəʊzi/', mean:'舒适的；温馨的'},
+  {word:'journey', phonetic:'/ˈdʒɜːni/', mean:'旅程；历程'},
+  {word:'flutter', phonetic:'/ˈflʌtə(r)/', mean:'飘动；颤动'},
+  {word:'sparkle', phonetic:'/ˈspɑːkl/', mean:'闪耀；闪光'},
+  {word:'nourish', phonetic:'/ˈnʌrɪʃ/', mean:'滋养；养育'},
+  {word:'blossom', phonetic:'/ˈblɒsəm/', mean:'花；盛开'},
+  {word:'tranquil', phonetic:'/ˈtræŋkwɪl/', mean:'平静的；安宁的'},
+  {word:'cherish', phonetic:'/ˈtʃerɪʃ/', mean:'珍爱；珍惜'},
+  {word:'wander', phonetic:'/ˈwɒndə(r)/', mean:'漫步；闲逛'},
+  {word:'glimmer', phonetic:'/ˈɡlɪmə(r)/', mean:'微光；一丝'},
+  {word:'embrace', phonetic:'/ɪmˈbreɪs/', mean:'拥抱；接纳'},
+];
+
+const YUE_WORDS = [
+  {word:'早晨', phonetic:'zou2 san4', mean:'早上好（粤语问候）'},
+  {word:'食咗饭未', phonetic:'sik6 zo2 faan6 mei6', mean:'吃饭了吗'},
+  {word:'唔該', phonetic:'m4 goi1', mean:'谢谢 / 麻烦你'},
+  {word:'喺邊度', phonetic:'hai2 bin1 dou6', mean:'在哪里'},
+  {word:'幾咁好', phonetic:'gei2 gam3 hou2', mean:'很好 / 多好'},
+  {word:'睇書', phonetic:'tai2 syu1', mean:'看书'},
+  {word:'飲茶', phonetic:'jam2 caa4', mean:'喝茶 / 叹早茶'},
+  {word:'行街', phonetic:'haang4 gaai1', mean:'逛街'},
+  {word:'瞓覺', phonetic:'fan3 gaau3', mean:'睡觉'},
+  {word:'唔舒服', phonetic:'m4 syu1 fuk1', mean:'不舒服 / 身体不好'},
+  {word:'幾多錢', phonetic:'gei2 do1 cin2', mean:'多少钱'},
+  {word:'咁啱嘅', phonetic:'gam3 ngaam5 ge3', mean:'这么巧'},
+  {word:'慢慢嚟', phonetic:'maan6 maan6 lai4', mean:'慢慢来'},
+  {word:'好攰', phonetic:'hou2 gwai3', mean:'很累'},
+  {word:'食飯', phonetic:'sik6 faan6', mean:'吃饭'},
+  {word:'我鍾意', phonetic:'ngo5 zung1 ji3', mean:'我喜欢'},
+  {word:'唔係', phonetic:'m4 hai6', mean:'不是'},
+  {word:'拜拜', phonetic:'baai1 baai3', mean:'再见'},
+  {word:'靚女', phonetic:'leng3 neoi5', mean:'美女（称呼）'},
+  {word:'開心', phonetic:'hoi1 sam1', mean:'开心'},
+];
+
+// 根据日期种子生成当日词汇
+function getDailyWords(list, count){
+  var seed = parseInt(today().replace(/-/g,''), 10);
+  var picks = [];
+  for(var i=0;i<count;i++){
+    picks.push(list[(seed + i*7) % list.length]);
+  }
+  return picks;
+}
+
+// ============ 工具函数 ============
+const today = ()=> new Date().toISOString().slice(0,10);
+const $ = id => document.getElementById(id);
+
+function showToast(msg){
+  const t = $('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2000);
+}
+
+// 安装引导横幅
+function showInstallBanner(){
+  const b = $('installBanner');
+  if(b) b.classList.add('show');
+}
+function hideInstallBanner(){
+  const b = $('installBanner');
+  if(b) b.classList.remove('show');
+}
+// 安装按钮：触发浏览器原生安装流程
+(function(){
+  const btn = document.getElementById('installBtn');
+  if(btn) btn.addEventListener('click', function(){
+    const p = window.__deferredPrompt;
+    if(p){
+      p.prompt();
+      p.userChoice.then(function(){ window.__deferredPrompt = null; hideInstallBanner(); });
+    } else {
+      // 不支持原生安装（如 iOS Safari）：提示手动添加
+      hideInstallBanner();
+      showToast('iOS：点 Safari 底部「分享」→「添加到主屏幕」🍔');
+    }
+  });
+})();
+
+
+// localStorage 封装（兼容微信禁用 localStorage）
+var _memoryStore = {};
+const Store = {
+  get(key, def){
+    def = def === undefined ? [] : def;
+    if(_memoryStore[key] !== undefined) return _memoryStore[key];
+    try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }catch(e){ return def; }
+  },
+  set(key, val){
+    _memoryStore[key] = val;
+    try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
+  },
+  getObj(key, def){
+    def = def === undefined ? {} : def;
+    if(_memoryStore[key] !== undefined) return _memoryStore[key];
+    try{ var v = localStorage.getItem(key); return v ? JSON.parse(v) : def; }catch(e){ return def; }
+  },
+};
+
+// ============ 导航栏渲染 ============
+function renderNavItem(m){
+  const count = getMenuCount(m.id);
+  return `<div class="nav-item" data-id="${m.id}" onclick="switchPage('${m.id}');">
+    <span class="nav-icon">${m.icon}</span>
+    <span class="nav-text">${m.name}</span>
+    ${count? `<span class="nav-badge">${count}</span>`:''}
+  </div>`;
+}
+
+// 移动端横向滚动标签项
+function renderMobileTab(m){
+  const count = getMenuCount(m.id);
+  return `<div class="mt-item" data-id="${m.id}" onclick="switchPage('${m.id}');">
+    <span class="mt-icon">${m.icon}</span>
+    <span class="mt-name">${m.name}</span>
+    ${count? `<span class="mt-badge">${count}</span>`:''}
+  </div>`;
+}
+
+function renderNav(){
+  // 左侧导航（大屏）
+  $('navList').innerHTML = MENUS.map(renderNavItem).join('');
+  // 移动端顶部横向标签栏
+  const mobileTabs = $('mobileTabs');
+  if(mobileTabs) mobileTabs.innerHTML = MENUS.map(renderMobileTab).join('');
+}
+
+function getMenuCount(id){
+  const items = Store.get('data_'+id, []);
+  return items.filter(i=>!i.done).length;
+}
+
+function switchPage(id){
+  // 所有导航项高亮同步
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.toggle('active', el.dataset.id===id));
+  // 移动端标签栏高亮同步
+  const tabs = document.querySelectorAll('.mt-item');
+  tabs.forEach(el=>el.classList.toggle('active', el.dataset.id===id));
+  // 把当前标签滚动到可视区域
+  const activeTab = document.querySelector('.mt-item.active');
+  if(activeTab && activeTab.scrollIntoView) activeTab.scrollIntoView({behavior:'smooth', inline:'center', block:'nearest'});
+  // 页面切换
+  document.querySelectorAll('.page').forEach(function(el){ el.classList.remove('active'); });
+  var page = document.getElementById('page_'+id);
+  if(page) page.classList.add('active');
+  if(id==='review'){
+    renderReview();
+  } else if(id==='podcast'){
+    initPodcastPlayer();
+  } else {
+    renderPage(id);
+  }
+  // 移动端滚动回顶部
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+// ============ 页面渲染 ============
+function renderAllPages(){
+  $('contentArea').innerHTML = MENUS.map(m=>{
+    if(m.id==='review') return renderReviewPage(m);
+    if(m.id==='podcast') return renderPodcastPage(m);
+    return `<div class="page" id="page_${m.id}">
+      <div class="page-header">
+        <span class="page-icon">${m.icon}</span>
+        <div><div class="page-title">${m.name}</div><div class="page-desc">${m.desc}</div></div>
+      </div>
+      <div id="content_${m.id}"></div>
+    </div>`;
+  }).join('');
+  // 默认显示第一个
+  switchPage('english');
+}
+
+function renderPage(id){
+  const el = $('content_'+id);
+  if(!el) return;
+  const menu = MENUS.find(m=>m.id===id);
+  const items = Store.get('data_'+id, []);
+
+  // 统计
+  const done = items.filter(i=>i.done).length;
+  const total = items.length;
+  const rate = total? Math.round(done/total*100) : 0;
+
+  let html = '';
+  // 统计行
+  if(id !== 'news' && id !== 'drama'){
+    html += `<div class="stats-row">
+      <div class="stat-mini"><div class="stat-mini-value">${total}</div><div class="stat-mini-label">📋 总计</div></div>
+      <div class="stat-mini"><div class="stat-mini-value">${done}</div><div class="stat-mini-label">✅ 已完成</div></div>
+      <div class="stat-mini"><div class="stat-mini-value">${rate}%</div><div class="stat-mini-label">📈 完成率</div></div>
+    </div>`;
+  }
+
+  // 卡路里汇总
+  if(id==='food' || id==='exercise'){
+    const todayItems = items.filter(i=>i.date && i.kcal && !isOldDate(i.date));
+    const sumKcal = items.reduce((s,i)=> s + (i.kcal||0), 0);
+    const icon = id==='food' ? '🍽️' : '🔥';
+    const label = id==='food' ? '今日摄入' : '今日消耗';
+    html += `<div class="kcal-summary">
+      <div><div class="kcal-num">${sumKcal}</div><div class="kcal-label">${label} (kcal)</div></div>
+      <div class="kcal-icon">${icon}</div>
+    </div>`;
+  }
+
+  // 输入区
+  html += renderInput(id, menu);
+  // 每日词汇（英语/粤语）
+  if(id==='english' || id==='cantonese'){
+    html += `<div id="dailyWordsSlot_${id}"></div>`;
+  }
+  // 列表
+  html += `<div id="list_${id}">${renderList(id, items)}</div>`;
+  el.innerHTML = html;
+
+  // 渲染每日词汇
+  if(id==='english' || id==='cantonese'){
+    renderDailyWords(id);
+  }
+  // 渲染今日新闻
+  if(id==='news'){
+    renderTodayNews();
+  }
+}
+
+// 判断记录是否非今日（用于区分每日摄入/消耗）
+function isOldDate(timeStr){
+  return false; // 暂不区分日期，按全部累计；如需每日重置可后续扩展
+}
+
+function renderInput(id, menu){
+  // 不同模块定制输入
+  switch(id){
+    case 'english':
+      return `<div class="daily-words" id="dailyWords_${id}"></div>
+      <div class="input-box">
+        <input type="text" id="inp_${id}_word" placeholder="单词/短语" style="flex:1">
+        <input type="text" id="inp_${id}_mean" placeholder="释义" style="flex:1">
+        <select id="inp_${id}_type" style="flex:0.5"><option>单词</option><option>短语</option><option>句子</option><option>语法</option></select>
+        <button class="btn-add" onclick="addItem('${id}')">➕ 添加</button>
+      </div>`;
+    case 'cantonese':
+      return `<div class="daily-words" id="dailyWords_${id}"></div>
+      <div class="input-box">
+        <input type="text" id="inp_${id}_word" placeholder="粤语表达" style="flex:1">
+        <input type="text" id="inp_${id}_mean" placeholder="普通话释义/粤拼" style="flex:1">
+        <button class="btn-add" onclick="addItem('${id}')">➕ 添加</button>
+      </div>`;
+    case 'reading':
+      return `<div class="input-box" style="flex-wrap:wrap;">
+        <textarea id="inp_${id}_word" placeholder="✨ 在这里粘贴/写下你喜欢的文案…" style="flex:1 1 100%; min-height:54px; resize:vertical; border:2px solid var(--sky-100); border-radius:12px; padding:10px 12px; font-family:inherit; font-size:15px;"></textarea>
+        <input type="text" id="inp_${id}_mean" placeholder="来源 / 作者（选填）" style="flex:1">
+        <button class="btn-add" onclick="addItem('${id}')">➕ 收藏文案</button>
+      </div>`;
+    case 'exercise':
+      return `<div class="input-box">
+        <input type="text" id="inp_${id}_word" placeholder="运动项目（如：跑步/游泳）" style="flex:1" list="exList_${id}">
+        <datalist id="exList_${id}">${Object.keys(EXERCISE_KCAL).map(e=>`<option value="${e}">`).join('')}</datalist>
+        <input type="number" id="inp_${id}_duration" placeholder="分钟" style="flex:0.4">
+        <input type="number" id="inp_${id}_weight" placeholder="体重kg" style="flex:0.4" value="55">
+        <button class="btn-add" onclick="addExercise('${id}')">➕ 打卡</button>
+      </div>`;
+    case 'food':
+      return `<div class="input-box">
+        <select id="inp_${id}_type" style="flex:0.4"><option>早餐</option><option>午餐</option><option>晚餐</option><option>加餐</option></select>
+        <input type="text" id="inp_${id}_word" placeholder="吃了什么（如：米饭/苹果）" style="flex:1" list="foodList_${id}">
+        <datalist id="foodList_${id}">${Object.keys(FOOD_KCAL).map(f=>`<option value="${f}">`).join('')}</datalist>
+        <input type="number" id="inp_${id}_gram" placeholder="克数" style="flex:0.4">
+        <button class="btn-add" onclick="addFood('${id}')">➕ 记录</button>
+      </div>`;
+    case 'finance':
+      return `<div class="input-box">
+        <select id="inp_${id}_type" style="flex:0.4"><option>收入</option><option>支出</option></select>
+        <input type="number" id="inp_${id}_word" placeholder="金额" style="flex:0.4">
+        <input type="text" id="inp_${id}_mean" placeholder="备注" style="flex:1">
+        <button class="btn-add" onclick="addItem('${id}')">➕ 记账</button>
+      </div>`;
+    case 'work':
+      return `<div class="input-box">
+        <input type="text" id="inp_${id}_word" placeholder="任务内容" style="flex:1">
+        <select id="inp_${id}_type" style="flex:0.4"><option>高优先</option><option>中优先</option><option>低优先</option></select>
+        <button class="btn-add" onclick="addItem('${id}')">➕ 添加</button>
+      </div>`;
+    case 'news':
+      return `<div class="news-fetch-bar">
+        <button class="btn-fetch" onclick="fetchTodayNews()">🔄 刷新新闻</button>
+        <span class="news-fetch-tip">打开自动加载当日热点，每日更新</span>
+      </div>
+      <div id="todayNews" class="today-news"></div>
+      <div class="input-box" style="margin-top:16px;">
+        <input type="text" id="inp_${id}_word" placeholder="收藏新闻标题" style="flex:1">
+        <input type="text" id="inp_${id}_mean" placeholder="来源/链接" style="flex:1">
+        <button class="btn-add" onclick="addItem('${id}')">➕ 收藏</button>
+      </div>`;
+    case 'drama':
+      return `<div class="input-box">
+        <input type="text" id="inp_${id}_word" placeholder="剧名" style="flex:1">
+        <select id="inp_${id}_type" style="flex:0.4"><option>想看</option><option>在看</option><option>看过</option></select>
+        <button class="btn-add" onclick="addItem('${id}')">➕ 添加</button>
+      </div>`;
+    default:
+      return `<div class="input-box">
+        <input type="text" id="inp_${id}_word" placeholder="内容" style="flex:1">
+        <button class="btn-add" onclick="addItem('${id}')">➕ 添加</button>
+      </div>`;
+  }
+}
+
+// ============ 每日词汇（英语/粤语） ============
+function renderDailyWords(id){
+  const container = $('dailyWords_'+id);
+  if(!container) return;
+  const list = id==='english' ? EN_WORDS : YUE_WORDS;
+  const words = getDailyWords(list, 5);
+  const isEn = id==='english';
+  container.innerHTML = `
+    <div class="daily-words-title">
+      <span>🌟 今日${isEn?'英语':'粤语'}词汇（${words.length}个）</span>
+      <span class="daily-words-refresh" onclick="renderDailyWords('${id}')">🔄 换一批</span>
+    </div>
+    ${words.map(w=>`
+      <div class="dw-item">
+        <span class="dw-word">${w.word}</span>
+        <span class="dw-phonetic">${w.phonetic}</span>
+        <span class="dw-mean">${w.mean}</span>
+        <button class="dw-speak" onclick="speakWord('${isEn?'en':'yue'}','${w.word.replace(/'/g,"\\'")}')">🔊</button>
+      </div>
+    `).join('')}
+  `;
+}
+
+function speakWord(lang, text){
+  try{
+    if('speechSynthesis' in window){
+      const u = new SpeechSynthesisUtterance(text);
+      if(lang==='en'){
+        u.lang = 'en-US';
+        u.rate = 0.85;
+      } else if(lang==='yue'){
+        // 粤语：优先用 zh-HK / yue-HK 语音
+        u.lang = 'zh-HK';
+        u.rate = 0.9;
+        // 尝试匹配系统中的粤语 voice
+        try{
+          const voices = window.speechSynthesis.getVoices();
+          const yueVoice = voices.find(function(v){
+            return v.lang && (v.lang.toLowerCase().indexOf('yue') >= 0 || v.lang.toLowerCase().indexOf('hk') >= 0 || v.name.toLowerCase().indexOf('cantonese') >= 0 || v.name.toLowerCase().indexOf('粤') >= 0);
+          });
+          if(yueVoice) u.voice = yueVoice;
+        }catch(e){}
+      } else {
+        u.lang = 'zh-CN';
+      }
+      window.speechSynthesis.cancel();
+      window.speechSynthesis.speak(u);
+    } else {
+      showToast('当前浏览器不支持语音朗读~');
+    }
+  }catch(e){ showToast('朗读失败，请手动跟读~'); }
+}
+
+// ============ 食物卡路里 ============
+function guessFoodKcal(name, gram){
+  gram = gram || 100;
+  let base = FOOD_KCAL[name];
+  if(base === undefined){
+    // 模糊匹配：看名字是否包含库中的食物
+    for(const key in FOOD_KCAL){
+      if(name.indexOf(key) >= 0){ base = FOOD_KCAL[key]; break; }
+    }
+  }
+  if(base === undefined) return null; // 未知食物，让用户手动输入
+  return Math.round(base * gram / 100);
+}
+
+function addFood(id){
+  const typeEl = $('inp_'+id+'_type');
+  const wordEl = $('inp_'+id+'_word');
+  const gramEl = $('inp_'+id+'_gram');
+  const name = wordEl ? wordEl.value.trim() : '';
+  if(!name){ showToast('请输入吃了什么~'); return; }
+  let gram = gramEl ? parseInt(gramEl.value, 10) : NaN;
+  if(!gram || gram <= 0) gram = 100;
+  let kcal = guessFoodKcal(name, gram);
+  let kcalText = '';
+  if(kcal === null){
+    // 未知食物，询问卡路里
+    const input = prompt('未找到「'+name+'」的卡路里数据，请手动输入这份的卡路里（kcal）：', '200');
+    if(input === null) return;
+    kcal = parseInt(input, 10);
+    if(isNaN(kcal)) kcal = 0;
+    kcalText = '('+kcal+'kcal)';
+  } else {
+    kcalText = '('+kcal+'kcal)';
+  }
+  const items = Store.get('data_'+id, []);
+  items.push({
+    text: name + ' ' + gram + 'g',
+    mean: kcalText,
+    type: typeEl ? typeEl.value : '',
+    kcal: kcal,
+    done:false,
+    date: new Date().toTimeString().slice(0,5)
+  });
+  Store.set('data_'+id, items);
+  if(wordEl) wordEl.value='';
+  if(gramEl) gramEl.value='';
+  renderPage(id);
+  renderNav();
+  showToast('已记录，+'+kcal+' kcal 🍽️');
+}
+
+// ============ 运动消耗卡路里 ============
+function addExercise(id){
+  const wordEl = $('inp_'+id+'_word');
+  const durEl = $('inp_'+id+'_duration');
+  const wtEl = $('inp_'+id+'_weight');
+  const name = wordEl ? wordEl.value.trim() : '';
+  if(!name){ showToast('请输入运动项目~'); return; }
+  const dur = durEl ? parseInt(durEl.value, 10) : NaN;
+  if(!dur || dur <= 0){ showToast('请输入运动时长（分钟）~'); return; }
+  const weight = wtEl ? parseFloat(wtEl.value) : NaN;
+  const w = (weight && weight > 0) ? weight : 55;
+  let rate = EXERCISE_KCAL[name];
+  if(rate === undefined){
+    for(const key in EXERCISE_KCAL){
+      if(name.indexOf(key) >= 0){ rate = EXERCISE_KCAL[key]; break; }
+    }
+  }
+  let kcal;
+  if(rate === undefined){
+    const input = prompt('未找到「'+name+'」的消耗数据，请手动输入本次消耗卡路里（kcal）：', '200');
+    if(input === null) return;
+    kcal = parseInt(input, 10);
+    if(isNaN(kcal)) kcal = 0;
+  } else {
+    kcal = Math.round(rate * w * dur / 60);
+  }
+  const items = Store.get('data_'+id, []);
+  items.push({
+    text: name,
+    mean: dur + '分钟 (' + kcal + 'kcal)',
+    kcal: kcal,
+    done:false,
+    date: new Date().toTimeString().slice(0,5)
+  });
+  Store.set('data_'+id, items);
+  if(wordEl) wordEl.value='';
+  if(durEl) durEl.value='';
+  renderPage(id);
+  renderNav();
+  showToast('已记录，消耗 '+kcal+' kcal 🏃');
+}
+
+function renderList(id, items){
+  if(!items.length) return `<div class="empty"><div class="empty-icon">🌸</div>还没有记录哦，刷到好文案就收藏在这里吧~</div>`;
+  if(id === 'reading'){
+    return items.slice().reverse().map((item, idx)=>{
+      const realIdx = items.length - 1 - idx;
+      const src = item.mean ? `<div class="copy-src">— ${item.mean}</div>` : '';
+      return `<div class="copy-card ${item.fav?'fav':''}">
+        <button class="copy-fav" onclick="toggleFav('${id}',${realIdx})" title="收藏">${item.fav?'⭐':'☆'}</button>
+        <div class="copy-text">${item.text.replace(/\n/g,'<br>')}</div>
+        ${src}
+        <div class="copy-foot"><span class="copy-date">📅 ${item.date||''}</span><button class="item-del" onclick="delItem('${id}',${realIdx})">✕ 删除</button></div>
+      </div>`;
+    }).join('');
+  }
+  return items.slice().reverse().map((item, idx)=>{
+    const realIdx = items.length - 1 - idx;
+    let tag = '';
+    if(item.type) tag = `<span class="item-tag">${item.type}</span>`;
+    if(item.mean) tag = `<span class="item-tag">${item.mean}</span>`;
+    return `<div class="list-item ${item.done?'done':''}">
+      <div class="item-check ${item.done?'checked':''}" onclick="toggleItem('${id}',${realIdx})">${item.done?'✓':''}</div>
+      <span class="item-text">${item.text}</span>
+      ${tag}
+      <span class="item-time">${item.date||''}</span>
+      <button class="item-del" onclick="delItem('${id}',${realIdx})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+// ============ 新闻热点 ============
+// 自动从云端 news.json 拉取当日新闻，本地缓存，打开即更新
+function renderTodayNews(){
+  const box = $('todayNews');
+  if(!box) return;
+  const cached = Store.getObj('today_news', null);
+  // 有缓存且是今天的，先立刻显示（避免空白等待）
+  if(cached && cached.date === today() && cached.items && cached.items.length){
+    drawNews(cached);
+    // 仍在后台静默刷新，确保是最新
+  } else {
+    box.innerHTML = `<div class="today-news-empty">🌸 正在加载今日新闻...</div>`;
+  }
+  // 拉取云端最新新闻（带超时）
+  fetchNews(box, cached);
+}
+
+function drawNews(data){
+  const box = $('todayNews');
+  if(!box || !data || !data.items || !data.items.length){
+    if(box) box.innerHTML = `<div class="today-news-empty">🌸 今日新闻稍后更新，点「刷新新闻」试试~</div>`;
+    return;
+  }
+  box.innerHTML = `<div style="font-size:13px;font-weight:600;color:var(--sky-500);margin-bottom:10px;">📰 ${data.date} 国内外热点（${data.items.length}条）</div>` +
+    data.items.map(function(n){
+      const tagClass = n.type==='world' ? 'world' : 'domestic';
+      const tagText = n.type==='world' ? '国际' : '国内';
+      return `<div class="tn-item">
+        <div class="tn-head">
+          <span class="tn-tag ${tagClass}">${tagText}</span>
+          <span class="tn-title">${n.title}</span>
+        </div>
+        <div class="tn-summary">${n.summary}</div>
+      </div>`;
+    }).join('');
+}
+
+function fetchNews(box, cached){
+  try{
+    const ctrl = new AbortController();
+    const timer = setTimeout(function(){ ctrl.abort(); }, 8000); // 8秒超时
+    fetch('news.json?t=' + Date.now(), {cache:'no-store', signal: ctrl.signal})
+      .then(function(r){
+        if(!r.ok) throw new Error('HTTP '+r.status);
+        return r.json();
+      })
+      .then(function(data){
+        clearTimeout(timer);
+        if(data && data.date && data.items && data.items.length){
+          Store.set('today_news', data);
+          drawNews(data);
+        } else if(box){
+          box.innerHTML = `<div class="today-news-empty">🌸 今日新闻稍后更新，点「🔄 刷新新闻」试试~</div>`;
+        }
+      })
+      .catch(function(err){
+        clearTimeout(timer);
+        // 超时或失败：保留本地缓存（若有），否则提示
+        if(box && (!cached || cached.date !== today())){
+          box.innerHTML = `<div class="today-news-empty">🌸 网络有点慢，已显示本地缓存～点「🔄 刷新新闻」可重试</div>`;
+        }
+      });
+  }catch(e){
+    if(box && (!cached || cached.date !== today())){
+      box.innerHTML = `<div class="today-news-empty">🌸 加载失败，点「🔄 刷新新闻」重试~</div>`;
+    }
+  }
+}
+
+// 点击按钮：手动刷新新闻
+function fetchTodayNews(){
+  showToast('正在刷新今日新闻...');
+  fetchNews();
+}
+
+// ============ 添加/删除/切换 ============
+function addItem(id){
+  const wordEl = $('inp_'+id+'_word');
+  const meanEl = $('inp_'+id+'_mean');
+  const typeEl = $('inp_'+id+'_type');
+  const text = wordEl? wordEl.value.trim() : '';
+  if(!text){ showToast('请输入内容~'); return; }
+  const mean = meanEl? meanEl.value.trim() : '';
+  const type = typeEl? typeEl.value : '';
+  const items = Store.get('data_'+id, []);
+  if(id === 'reading'){
+    // 文案记录：内容 + 来源，支持收藏
+    items.push({ text, mean, type, fav:false, done:false, date: today() });
+  } else {
+    items.push({ text, mean, type, done:false, date: new Date().toTimeString().slice(0,5) });
+  }
+  Store.set('data_'+id, items);
+  if(wordEl){ wordEl.value=''; if(wordEl.tagName==='TEXTAREA') wordEl.style.height=''; }
+  if(meanEl) meanEl.value='';
+  renderPage(id);
+  renderNav();
+  showToast(id==='reading' ? '文案已收藏~ 🌟' : '添加成功啦~ 🌸');
+}
+
+// 文案记录：切换收藏
+function toggleFav(id, idx){
+  const items = Store.get('data_'+id, []);
+  if(!items[idx]) return;
+  items[idx].fav = !items[idx].fav;
+  Store.set('data_'+id, items);
+  renderPage(id);
+  renderNav();
+}
+
+function toggleItem(id, idx){
+  const items = Store.get('data_'+id, []);
+  items[idx].done = !items[idx].done;
+  Store.set('data_'+id, items);
+  renderPage(id);
+  renderNav();
+}
+
+function delItem(id, idx){
+  const items = Store.get('data_'+id, []);
+  items.splice(idx, 1);
+  Store.set('data_'+id, items);
+  renderPage(id);
+  renderNav();
+  showToast('已删除~');
+}
+
+// ============ 复盘页面 ============
+function renderReviewPage(menu){
+  return `<div class="page" id="page_${menu.id}">
+    <div class="page-header">
+      <span class="page-icon">${menu.icon}</span>
+      <div><div class="page-title">${menu.name}</div><div class="page-desc">${menu.desc}</div></div>
+    </div>
+    <div class="review-card">
+      <div class="review-label">🌟 今日亮点 — 做得好的事</div>
+      <textarea class="review-textarea" id="review_good" placeholder="今天有什么让你开心或自豪的事？"></textarea>
+    </div>
+    <div class="review-card">
+      <div class="review-label">💭 今日反思 — 可以改进的地方</div>
+      <textarea class="review-textarea" id="review_bad" placeholder="有什么做得不够好，明天可以改进？"></textarea>
+    </div>
+    <div class="review-card">
+      <div class="review-label">🎯 明日计划 — 明天要做的三件事</div>
+      <textarea class="review-textarea" id="review_plan" placeholder="1. ...&#10;2. ...&#10;3. ..."></textarea>
+    </div>
+    <div class="review-card">
+      <div class="review-label">💝 今日心情</div>
+      <textarea class="review-textarea" id="review_mood" placeholder="用一句话记录今天的心情~" style="min-height:50px"></textarea>
+    </div>
+    <button class="review-save" onclick="saveReview()">💾 保存复盘</button>
+    <div id="reviewHistory" style="margin-top:20px;"></div>
+  </div>`;
+}
+
+function renderReview(){
+  const data = Store.getObj('review_'+today(), {});
+  ['good','bad','plan','mood'].forEach(k=>{
+    const el = $('review_'+k);
+    if(el) el.value = data[k] || '';
+  });
+  // 历史
+  const allKeys = Object.keys(localStorage).filter(k=>k.startsWith('review_')).sort().reverse().slice(0,5);
+  const hist = allKeys.map(k=>{
+    const d = Store.getObj(k, {});
+    const date = k.replace('review_','');
+    return `<div class="review-card" style="background:var(--sky-50);">
+      <div class="review-label">📅 ${date}</div>
+      ${d.good?'<div style="font-size:13px;margin-bottom:6px;">🌟 '+d.good.replace(/\n/g,'<br>')+'</div>':''}
+      ${d.mood?'<div style="font-size:13px;color:var(--text-soft);">💝 '+d.mood.replace(/\n/g,'<br>')+'</div>':''}
+    </div>`;
+  }).join('');
+  const histEl = $('reviewHistory');
+  if(histEl) histEl.innerHTML = hist? '<div style="font-size:14px;font-weight:600;color:var(--sky-500);margin-bottom:10px;">📜 最近复盘</div>'+hist : '';
+}
+
+function saveReview(){
+  const data = {
+    good: $('review_good').value,
+    bad: $('review_bad').value,
+    plan: $('review_plan').value,
+    mood: $('review_mood').value,
+  };
+  Store.set('review_'+today(), data);
+  showToast('复盘已保存~ 🌙');
+  renderReview();
+}
+
+// ============ 每日播客 ============
+let PODCAST_DATA = null;     // 当日推荐列表
+let PODCAST_AUDIO = null;    // Audio 实例
+let PODCAST_INDEX = 0;       // 当前播放索引
+let PODCAST_PLAYING = false;
+
+function renderPodcastPage(menu){
+  return `<div class="page" id="page_${menu.id}">
+    <div class="page-header">
+      <span class="page-icon">${menu.icon}</span>
+      <div><div class="page-title">${menu.name}</div><div class="page-desc">${menu.desc}</div></div>
+    </div>
+    <div class="podcast-tags">
+      <span class="podcast-tag">商业科技</span>
+      <span class="podcast-tag">每日推荐</span>
+      <span class="podcast-tag">15分钟听世界</span>
+      <span class="podcast-tag">点击即播</span>
+    </div>
+    <div class="podcast-player-card">
+      <div class="podcast-playing-badge">🎧 正在收听</div>
+      <div class="podcast-cover" id="podcastCover">🎙️</div>
+      <div class="podcast-title" id="podcastTitle">加载中…</div>
+      <div class="podcast-host" id="podcastHost">每日推荐 15 分钟播客</div>
+      <div class="podcast-progress-wrap">
+        <input type="range" class="podcast-progress" id="podcastProgress" value="0" min="0" max="100" step="0.1" oninput="seekPodcast(this.value)">
+        <div class="podcast-time">
+          <span id="podcastCurrent">00:00</span>
+          <span id="podcastDuration">00:00</span>
+        </div>
+      </div>
+      <div class="podcast-controls">
+        <button class="podcast-ctrl" onclick="prevPodcast()" title="上一集">⏮</button>
+        <button class="podcast-ctrl play" id="podcastPlayBtn" onclick="togglePodcastPlay()" title="播放/暂停">▶</button>
+        <button class="podcast-ctrl" onclick="nextPodcast()" title="下一集">⏭</button>
+      </div>
+    </div>
+    <div class="podcast-section-title">精选单集 <span id="podcastCount" class="podcast-count">0 期</span></div>
+    <div id="podcastList" class="podcast-list">
+      <div class="today-news-empty">🎙️ 正在加载今日播客推荐…</div>
+    </div>
+  </div>`;
+}
+
+function initPodcastPlayer(){
+  const listEl = $('podcastList');
+  if(!listEl) return;
+
+  // 先用本地缓存（当天）即时显示，避免空白等待
+  const cached = Store.getObj('today_podcasts', null);
+  if(cached && cached.date === today() && cached.items && cached.items.length){
+    renderPodcastList(cached.items);
+  } else {
+    listEl.innerHTML = '<div class="today-news-empty">🎙️ 正在加载今日播客推荐…</div>';
+  }
+
+  // 拉取云端最新候选（带超时，失败则用本地缓存）
+  fetchPodcasts();
+}
+
+function fetchPodcasts(){
+  try{
+    const ctrl = new AbortController();
+    const timer = setTimeout(function(){ ctrl.abort(); }, 8000);
+    fetch('podcasts.json?t=' + Date.now(), {cache:'no-store', signal: ctrl.signal})
+      .then(function(r){ if(!r.ok) throw new Error('HTTP '+r.status); return r.json(); })
+      .then(function(data){
+        clearTimeout(timer);
+        if(data && data.items && data.items.length){
+          const picks = getDailyPodcasts(data.items, 5);
+          Store.set('today_podcasts', {date: today(), items: picks});
+          renderPodcastList(picks);
+        }
+      })
+      .catch(function(){
+        clearTimeout(timer);
+        const listEl = $('podcastList');
+        if(listEl && (!cached || cached.date !== today())){
+          listEl.innerHTML = '<div class="today-news-empty">🌸 网络有点慢，已显示本地缓存～稍后再来看看</div>';
+        }
+      });
+  }catch(e){
+    const listEl = $('podcastList');
+    if(listEl && (!cached || cached.date !== today())){
+      listEl.innerHTML = '<div class="today-news-empty">🌸 加载失败，稍后再来看看~</div>';
+    }
+  }
+}
+
+function getDailyPodcasts(items, count){
+  // 日期种子随机打乱，每天固定一组推荐
+  const seed = new Date().getFullYear()*1000 + new Date().getMonth()*40 + new Date().getDate();
+  const arr = items.slice();
+  let s = seed % 2147483647;
+  for(let i = arr.length - 1; i > 0; i--){
+    s = (s * 16807) % 2147483647;
+    const j = s % (i + 1);
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  // 优先 15 分钟左右的单集
+  const short = arr.filter(function(p){ return p.duration >= 600 && p.duration <= 1200; });
+  const pool = short.length >= count ? short : arr;
+  return pool.slice(0, count);
+}
+
+function renderPodcastList(items){
+  PODCAST_DATA = items;
+  const listEl = $('podcastList');
+  const countEl = $('podcastCount');
+  if(countEl) countEl.textContent = items.length + ' 期';
+  if(!listEl) return;
+  listEl.innerHTML = items.map(function(p, idx){
+    const isPlaying = PODCAST_PLAYING && PODCAST_INDEX === idx;
+    return `<div class="podcast-item ${isPlaying?'playing':''}" onclick="playPodcast(${idx})">
+      <div class="podcast-item-cover" style="background:${p.color||'var(--sky-400)'}">${p.category ? p.category.slice(0,2) : '🎙️'}</div>
+      <div class="podcast-item-info">
+        <div class="podcast-item-title">${p.title}</div>
+        <div class="podcast-item-meta">${p.host} · ${p.category} · ${formatTime(p.duration)}</div>
+        <div class="podcast-item-desc">${p.desc || ''}</div>
+      </div>
+      <div class="podcast-item-play">${isPlaying?'⏸':'▶'}</div>
+    </div>`;
+  }).join('');
+  // 默认播放第一集（不自动播放，只加载）
+  if(items.length && !PODCAST_AUDIO){
+    loadPodcast(0, false);
+  }
+}
+
+function loadPodcast(idx, autoPlay){
+  if(!PODCAST_DATA || !PODCAST_DATA[idx]) return;
+  PODCAST_INDEX = idx;
+  const p = PODCAST_DATA[idx];
+
+  // 更新播放器信息
+  $('podcastTitle').textContent = p.title;
+  $('podcastHost').textContent = p.host + ' · ' + p.category;
+  $('podcastCover').textContent = '🎙️';
+  $('podcastCover').style.background = p.color || 'var(--sky-400)';
+
+  // 创建/切换音频
+  if(PODCAST_AUDIO){
+    PODCAST_AUDIO.pause();
+    PODCAST_AUDIO.src = p.audioUrl;
+  } else {
+    PODCAST_AUDIO = new Audio(p.audioUrl);
+    PODCAST_AUDIO.addEventListener('timeupdate', updatePodcastProgress);
+    PODCAST_AUDIO.addEventListener('loadedmetadata', function(){
+      $('podcastDuration').textContent = formatTime(PODCAST_AUDIO.duration || p.duration);
+    });
+    PODCAST_AUDIO.addEventListener('ended', function(){ nextPodcast(); });
+    PODCAST_AUDIO.addEventListener('error', function(){ showToast('音频加载失败，换一集试试~'); });
+  }
+  PODCAST_AUDIO.load();
+  $('podcastCurrent').textContent = '00:00';
+  $('podcastDuration').textContent = formatTime(p.duration);
+  $('podcastProgress').value = 0;
+  PODCAST_PLAYING = false;
+  updatePlayBtn();
+  renderPodcastList(PODCAST_DATA);
+
+  if(autoPlay){
+    playCurrentAudio();
+  }
+}
+
+function playPodcast(idx){
+  if(idx === PODCAST_INDEX && PODCAST_AUDIO){
+    togglePodcastPlay();
+  } else {
+    loadPodcast(idx, true);
+  }
+}
+
+function togglePodcastPlay(){
+  if(!PODCAST_AUDIO) return;
+  if(PODCAST_PLAYING){
+    PODCAST_AUDIO.pause();
+    PODCAST_PLAYING = false;
+  } else {
+    playCurrentAudio();
+  }
+  updatePlayBtn();
+  renderPodcastList(PODCAST_DATA);
+}
+
+function playCurrentAudio(){
+  if(!PODCAST_AUDIO) return;
+  const promise = PODCAST_AUDIO.play();
+  if(promise && promise.then){
+    promise.then(function(){ PODCAST_PLAYING = true; updatePlayBtn(); })
+           .catch(function(){ showToast('播放失败，请手动点击播放~'); });
+  } else {
+    PODCAST_PLAYING = true;
+  }
+}
+
+function updatePlayBtn(){
+  const btn = $('podcastPlayBtn');
+  if(btn) btn.textContent = PODCAST_PLAYING ? '⏸' : '▶';
+}
+
+function prevPodcast(){
+  if(!PODCAST_DATA || !PODCAST_DATA.length) return;
+  const idx = (PODCAST_INDEX - 1 + PODCAST_DATA.length) % PODCAST_DATA.length;
+  loadPodcast(idx, true);
+}
+
+function nextPodcast(){
+  if(!PODCAST_DATA || !PODCAST_DATA.length) return;
+  const idx = (PODCAST_INDEX + 1) % PODCAST_DATA.length;
+  loadPodcast(idx, true);
+}
+
+function updatePodcastProgress(){
+  if(!PODCAST_AUDIO) return;
+  const cur = PODCAST_AUDIO.currentTime || 0;
+  const dur = PODCAST_AUDIO.duration || 1;
+  const pct = dur ? (cur / dur * 100) : 0;
+  $('podcastCurrent').textContent = formatTime(cur);
+  $('podcastProgress').value = pct;
+}
+
+function seekPodcast(value){
+  if(!PODCAST_AUDIO || !PODCAST_AUDIO.duration) return;
+  PODCAST_AUDIO.currentTime = PODCAST_AUDIO.duration * value / 100;
+}
+
+function formatTime(sec){
+  if(!sec || isNaN(sec)) return '00:00';
+  sec = Math.floor(sec);
+  const h = Math.floor(sec / 3600);
+  const m = Math.floor((sec % 3600) / 60);
+  const s = sec % 60;
+  const pad = function(n){ return n < 10 ? '0'+n : n; };
+  if(h > 0) return h + ':' + pad(m) + ':' + pad(s);
+  return pad(m) + ':' + pad(s);
+}
+
+// ============ 时钟 ============
+function updateClock(){
+  const now = new Date();
+  $('clock').textContent = now.toTimeString().slice(0,8);
+  $('date').textContent = `${now.getFullYear()}年${now.getMonth()+1}月${now.getDate()}日`;
+  const weeks = ['星期日','星期一','星期二','星期三','星期四','星期五','星期六'];
+  $('weekday').textContent = weeks[now.getDay()];
+}
+
+// ============ 打卡 ============
+function initPunch(){
+  const punchData = Store.getObj('punch', {lastDate:'', streak:0, total:0});
+  // 如果跨天了，重置今日状态
+  if(punchData.lastDate !== today()){
+    $('punchBtn').classList.remove('done');
+    $('punchBtn').textContent = '🌷 今日打卡';
+    $('punchStreak').textContent = '今日未打卡';
+    $('punchEmoji').textContent = '🌼';
+  } else {
+    $('punchBtn').classList.add('done');
+    $('punchBtn').textContent = '✅ 今日已打卡';
+    $('punchStreak').textContent = '已连续 '+punchData.streak+' 天';
+    $('punchEmoji').textContent = '🌸';
+  }
+  $('punchCount').textContent = punchData.streak;
+}
+
+function doPunch(){
+  const punchData = Store.getObj('punch', {lastDate:'', streak:0, total:0});
+  if(punchData.lastDate === today()){
+    showToast('今天已经打过卡啦~');
+    return;
+  }
+  // 计算连续天数
+  const yesterday = new Date(Date.now()-86400000).toISOString().slice(0,10);
+  if(punchData.lastDate === yesterday){
+    punchData.streak += 1;
+  } else {
+    punchData.streak = 1;
+  }
+  punchData.lastDate = today();
+  punchData.total = (punchData.total||0) + 1;
+  Store.set('punch', punchData);
+  initPunch();
+  showToast('打卡成功！连续 '+punchData.streak+' 天 🎉');
+}
+
+// ============ 每日激励语 ============
+function getDailyQuote(){
+  // 用日期作为种子，每天固定一句
+  const seed = new Date().getFullYear()*1000 + new Date().getMonth()*40 + new Date().getDate();
+  return QUOTES[seed % QUOTES.length];
+}
+
+function refreshQuote(){
+  const q = QUOTES[Math.floor(Math.random()*QUOTES.length)];
+  $('quoteCn').textContent = q.cn;
+  $('quoteEn').textContent = q.en;
+}
+
+function initQuote(){
+  const q = getDailyQuote();
+  $('quoteCn').textContent = q.cn;
+  $('quoteEn').textContent = q.en;
+}
+
+// ============ 每日重置检查 ============
+function checkDailyReset(){
+  const lastReset = Store.get('lastReset', '');
+  if(lastReset !== today()){
+    // 每日重置：清除"每日重置"类模块的当日数据（但保留累积记录）
+    // 这里只标记，不自动删除，由各模块自行管理
+    Store.set('lastReset', today());
+  }
+}
+
+// ============ 初始化 ============
+function init(){
+  try{
+    checkDailyReset();
+    renderNav();
+    renderAllPages();
+    updateClock();
+    setInterval(updateClock, 1000);
+    initPunch();
+    initQuote();
+  }catch(e){
+    // 初始化出错时至少显示时间
+    updateClock();
+    setInterval(updateClock, 1000);
+  }
+  // 从 URL 注入今日新闻（助手生成的分享链接带 ?news= 参数）
+  try{
+    var qs = location.search;
+    var newsParam = '';
+    var idx = qs.indexOf('news=');
+    if(idx >= 0){
+      newsParam = qs.substring(idx + 5).split('&')[0];
+    }
+    if(newsParam){
+      var decoded = JSON.parse(decodeURIComponent(escape(atob(newsParam))));
+      if(decoded && decoded.items && decoded.items.length){
+        setTodayNews(decoded.items);
+      }
+      // 清理 URL，避免重复写入
+      var cleanUrl = location.origin + location.pathname + location.hash;
+      history.replaceState(null, '', cleanUrl);
+    }
+  }catch(e){}
+  // 注册 Service Worker，支持「添加到主屏幕」与离线缓存（PWA / App 化）
+  if('serviceWorker' in navigator){
+    try{
+      navigator.serviceWorker.register('sw.js').catch(function(err){ /* 注册失败不影响正常使用 */ });
+    }catch(e){}
+  }
+  // 捕获浏览器「可安装」事件，展示安装引导
+  window.addEventListener('beforeinstallprompt', function(e){
+    e.preventDefault();
+    window.__deferredPrompt = e;
+    showInstallBanner();
+  });
+  window.addEventListener('appinstalled', function(){ hideInstallBanner(); showToast('已安装，去主屏找「汉堡的万能助手」吧 🍔'); });
+  // 阻止移动端双击缩放
+  var lastTouch = 0;
+  document.addEventListener('touchend', function(e){
+    var now = Date.now();
+    if(now - lastTouch < 300){ e.preventDefault(); }
+    lastTouch = now;
+  }, {passive:false});
+  // 处理 URL hash 跳转（从快捷方式打开）
+  if(location.hash === '#review') switchPage('review');
+  if(location.hash === '#punch'){
+    var punchBtn = document.getElementById('punchBtn');
+    if(punchBtn && punchBtn.scrollIntoView) punchBtn.scrollIntoView({behavior:'smooth'});
+  }
+}
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
