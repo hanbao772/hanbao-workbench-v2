@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>汉堡的万能助手</title>
+<style>
+  html,body{margin:0;padding:0;height:100%;background:#eff6ff;}
+  #loader{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;color:#0ea5e9;}
+  .spin{width:40px;height:40px;border:4px solid #bae6fd;border-top-color:#0ea5e9;border-radius:50%;animation:sp 0.9s linear infinite;margin-bottom:14px;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+  iframe{width:100%;height:100%;border:0;display:block;}
+</style>
+</head>
+<body>
+<div id="loader"><div class="spin"></div><div>正在加载最新版…</div></div>
+<script>
+// 不带 Service Worker 的纯净入口：每次强制拉取最新 index.html（加时间戳防缓存）
+(function(){
+  var ts = Date.now();
+  var url = 'index.html?_=' + ts + '#' + location.hash.replace('#','');
+  var f = document.createElement('iframe');
+  f.src = url;
+  f.onload = function(){ var l=document.getElementById('loader'); if(l) l.style.display='none'; };
+  f.onerror = function(){
+    document.getElementById('loader').innerHTML = '<div style="padding:20px;text-align:center;font-family:sans-serif;color:#0369a1;">加载失败，请检查网络后刷新～</div>';
+  };
+  document.body.appendChild(f);
+})();
+</script>
+</body>
+</html>
