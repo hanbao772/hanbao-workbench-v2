@@ -1,4 +1,4 @@
-const CACHE_NAME = 'workbench-v4';
+const CACHE_NAME = 'workbench-v5';
 const ASSETS = [
   './index.html',
   './manifest.json',
@@ -24,9 +24,16 @@ self.addEventListener('activate', e => {
   );
 });
 
-// 网络优先，失败回退缓存（保证数据最新，离线可用）
+// 网络优先；index.html 永远不缓存、不回退旧版，保证最新模块立即生效
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
+  const url = new URL(e.request.url);
+  const isIndex = url.pathname.endsWith('/index.html') || url.pathname.endsWith('/') || url.pathname.endsWith('/hanbao-workbench-v2/');
+  if (isIndex) {
+    // 直接走网络，绝不读缓存
+    e.respondWith(fetch(e.request).catch(() => fetch('./index.html?t=' + Date.now())));
+    return;
+  }
   e.respondWith(
     fetch(e.request)
       .then(res => {
