@@ -1,4 +1,4 @@
-const CACHE_NAME = 'workbench-v3';
+const CACHE_NAME = 'workbench-v4';
 const ASSETS = [
   './index.html',
   './manifest.json',
@@ -8,14 +8,14 @@ const ASSETS = [
   './favicon.png',
 ];
 
-// 安装时缓存核心资源
+// 安装时缓存核心资源，并立即激活新版 SW
 self.addEventListener('install', e => {
   e.waitUntil(
     caches.open(CACHE_NAME).then(cache => cache.addAll(ASSETS)).then(() => self.skipWaiting())
   );
 });
 
-// 激活时清理旧缓存
+// 激活时：清理所有旧缓存（workbench-v3 及更早），并接管所有页面
 self.addEventListener('activate', e => {
   e.waitUntil(
     caches.keys().then(keys =>
