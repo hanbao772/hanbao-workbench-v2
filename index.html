@@ -614,7 +614,98 @@ body{
   .main{margin-left:200px; padding:22px 28px 50px;}
   .dashboard{grid-template-columns:1fr 1fr 1.2fr;}
 }
-</style>
+
+/* ===== 英语学习中心 ===== */
+.en-tabs{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+.en-tab{
+  border:1.5px solid var(--sky-100); background:var(--sky-50); color:var(--text-soft);
+  padding:8px 13px; border-radius:20px; font-size:13.5px; cursor:pointer; font-family:inherit;
+  transition:.2s; white-space:nowrap;
+}
+.en-tab.active{background:var(--sky-500); color:#fff; border-color:var(--sky-500); box-shadow:0 3px 10px rgba(56,189,248,.3);}
+.en-tab:hover{transform:translateY(-1px);}
+
+.en-level-switch{display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
+.en-lvl{
+  border:1.5px solid var(--sky-100); background:#fff; color:var(--text-soft);
+  padding:6px 12px; border-radius:14px; font-size:13px; cursor:pointer; font-family:inherit;
+}
+.en-lvl.active{background:var(--sky-500); color:#fff; border-color:var(--sky-500);}
+.en-lvl-tip{font-size:12px; color:var(--text-soft); margin-left:auto;}
+
+.en-word-list{display:flex; flex-direction:column; gap:8px;}
+.en-word{
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+  background:#fff; border:1.5px solid var(--sky-100); border-radius:14px; padding:11px 14px;
+}
+.en-word-main{display:flex; flex-direction:column; gap:2px;}
+.en-word-t{font-size:16px; font-weight:700; color:var(--text);}
+.en-word-p{font-size:12.5px; color:var(--sky-500);}
+.en-word-m{font-size:13px; color:var(--text-soft);}
+.en-word-acts{display:flex; gap:6px; flex-shrink:0;}
+.en-ic{
+  border:1.5px solid var(--sky-100); background:var(--sky-50); color:var(--sky-500);
+  width:36px; height:36px; border-radius:10px; cursor:pointer; font-size:15px; font-family:inherit;
+  transition:.15s;
+}
+.en-ic:hover{background:var(--sky-500); color:#fff;}
+.en-ic.saved{background:#fef3c7; color:#d97706; border-color:#fde68a;}
+
+.en-saved-box{margin-top:18px; background:var(--sky-50); border-radius:16px; padding:14px;}
+.en-saved-title{font-weight:700; color:var(--sky-600); margin-bottom:10px; font-size:14px;}
+.en-saved-item{display:flex; align-items:center; gap:8px; padding:7px 0; border-bottom:1px dashed var(--sky-100); font-size:14px;}
+.en-saved-item:last-child{border-bottom:none;}
+.en-saved-m{font-size:12px; color:var(--text-soft); flex:1;}
+
+.en-review-tip,.en-phrase-tip,.en-listen-tip,.en-speak-tip{font-size:13px; color:var(--text-soft); margin-bottom:12px; background:var(--sky-50); padding:9px 12px; border-radius:12px;}
+.en-review-list{display:flex; flex-direction:column; gap:8px;}
+.en-review-item{background:#fff; border:1.5px solid var(--sky-100); border-radius:14px; padding:12px 14px;}
+.en-review-word{display:flex; align-items:center; gap:8px; font-size:16px; font-weight:700; color:var(--text);}
+.en-review-ans{margin-top:8px; font-size:13.5px; color:var(--sky-600); background:var(--sky-50); padding:8px 10px; border-radius:10px;}
+.en-refresh-btn{margin-top:14px; border:1.5px solid var(--sky-100); background:#fff; color:var(--sky-500); padding:9px 16px; border-radius:14px; cursor:pointer; font-family:inherit; font-size:14px;}
+
+.en-phrase-list,.en-listen-list,.en-speak-list{display:flex; flex-direction:column; gap:10px;}
+.en-phrase{background:#fff; border:1.5px solid var(--sky-100); border-radius:14px; padding:12px 14px;}
+.en-phrase-en{font-size:15px; font-weight:600; color:var(--text); cursor:pointer;}
+.en-phrase-cn{font-size:13.5px; color:var(--text-soft); margin-top:4px;}
+.en-phrase-foot{display:flex; align-items:center; justify-content:space-between; margin-top:8px;}
+.en-phrase-scene{font-size:12px; color:var(--sky-600); background:var(--sky-50); padding:3px 9px; border-radius:10px;}
+.en-listen,.en-speak{background:#fff; border:1.5px solid var(--sky-100); border-radius:14px; padding:12px 14px;}
+.en-listen-head{display:flex; align-items:center; justify-content:space-between; margin-bottom:8px;}
+.en-listen-title{font-weight:700; color:var(--text);}
+.en-listen-level{font-size:11.5px; color:var(--sky-600); background:var(--sky-50); padding:3px 9px; border-radius:10px;}
+.en-listen-script{font-size:13.5px; line-height:1.7; color:var(--text); margin-bottom:8px;}
+.en-listen-qa{font-size:12.5px; color:var(--text-soft); margin-top:8px; background:var(--sky-50); padding:8px 10px; border-radius:10px; line-height:1.6;}
+.en-speak-topic{font-weight:700; color:var(--text); margin-bottom:6px;}
+.en-speak-tip-text{font-size:13.5px; color:var(--text-soft); line-height:1.7; margin-bottom:8px;}
+
+.en-plan-box{background:#fff; border:1.5px solid var(--sky-100); border-radius:16px; padding:16px;}
+.en-plan-text{white-space:pre-wrap; font-family:inherit; font-size:13.5px; line-height:1.8; color:var(--text); margin:0;}
+
+/* ===== 职场提升 ===== */
+.wp-push-card{background:linear-gradient(135deg,#fffbeb,#fef3c7); border:1.5px solid #fde68a; border-radius:16px; padding:16px; margin-bottom:16px;}
+.wp-push-head{display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;}
+.wp-push-cat{font-size:12px; font-weight:700; color:#b45309; background:#fde68a; padding:3px 10px; border-radius:10px;}
+.wp-push-title{font-size:16px; font-weight:700; color:#92400e;}
+.wp-push-body{font-size:13.5px; line-height:1.75; color:#7c5e10; margin-bottom:12px;}
+.wp-push-btn{border:1.5px solid #f59e0b; background:#fff; color:#b45309; padding:8px 15px; border-radius:12px; cursor:pointer; font-family:inherit; font-size:13.5px; font-weight:600;}
+
+/* ===== 运动锻炼：欧阳春晓计划 ===== */
+.ex-phase-card{background:linear-gradient(135deg,#ecfeff,#e0f2fe); border:1.5px solid #bae6fd; border-radius:16px; padding:16px; margin-bottom:16px;}
+.ex-phase-head{display:flex; align-items:center; gap:10px; margin-bottom:8px; flex-wrap:wrap;}
+.ex-phase-badge{font-size:12.5px; font-weight:700; color:#0369a1; background:#bae6fd; padding:4px 11px; border-radius:11px;}
+.ex-phase-weeks{font-size:15px; font-weight:700; color:#0c4a6e;}
+.ex-phase-goal{font-size:13px; color:#075985; margin-bottom:12px; line-height:1.6;}
+.ex-video-title{font-size:13px; font-weight:600; color:#0369a1; margin-bottom:8px;}
+.ex-video-list{display:flex; flex-direction:column; gap:8px; margin-bottom:12px;}
+.ex-video{
+  display:block; text-decoration:none; background:#fff; border:1.5px solid #bae6fd; border-radius:12px;
+  padding:11px 14px; color:#0369a1; font-size:14px; font-weight:600; cursor:pointer; transition:.15s;
+}
+.ex-video:hover{background:#0369a1; color:#fff; transform:translateY(-1px); box-shadow:0 4px 12px rgba(3,105,161,.25);}
+.ex-replan-btn{width:100%; border:1.5px solid #0ea5e9; background:#fff; color:#0369a1; padding:10px; border-radius:12px; cursor:pointer; font-family:inherit; font-size:14px; font-weight:600;}
+.empty-sm{font-size:13px; color:var(--text-soft); padding:8px 0; text-align:center;}
+
 </head>
 <body>
 
@@ -692,7 +783,8 @@ body{
 <script>
 // ============ 数据配置 ============
 const MENUS = [
-  {id:'english', icon:'📖', name:'英语学习', desc:'每日单词 · 句型 · 听力练习'},
+  {id:'english', icon:'📖', name:'英语学习', desc:'四六级 · 复习 · 短句 · 听力 · 口语'},
+  {id:'workplace', icon:'💼', name:'职场提升', desc:'职场锦囊 · 情商金句 · 每日打卡'},
   {id:'reading', icon:'✍️', name:'文案记录', desc:'灵感文案 · 好句收藏'},
   {id:'exercise', icon:'🏃', name:'锻炼身体', desc:'运动打卡 · 健身记录'},
   {id:'food', icon:'🍽️', name:'好好吃饭', desc:'三餐记录 · 饮食健康'},
@@ -759,7 +851,39 @@ const EXERCISE_KCAL = {
   '深蹲':5.0,'椭圆机':6.5,'划船机':7.0,'太极':3.5,'散步':2.5,'爬楼梯':8.0,'核心训练':5.0,'普拉提':4.0,
 };
 
-// ============ 词汇库 ============
+// ============ 欧阳春晓初学者健身计划 ============
+// 每阶含可直接打开跟练的视频（B站/西瓜视频链接）
+const EXERCISE_PLAN = [
+  {
+    phase:1, weeks:'第 1–4 周 · 基础激活',
+    goal:'唤醒身体、建立运动习惯，不追求强度，重在坚持',
+    videos:[
+      {title:'欧阳春晓 | 新手全身激活 10min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20新手%20全身激活'},
+      {title:'欧阳春晓 | 瘦手臂拜拜肉 8min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20瘦手臂%20拜拜肉'},
+      {title:'欧阳春晓 | 改善假胯宽 12min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20假胯宽'},
+    ]
+  },
+  {
+    phase:2, weeks:'第 5–8 周 · 塑形进阶',
+    goal:'针对腰腹、腿臀，加入节奏更快的跟练',
+    videos:[
+      {title:'欧阳春晓 | 马甲线养成 15min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20马甲线'},
+      {title:'欧阳春晓 | 翘臀不粗腿 15min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20翘臀%20不粗腿'},
+      {title:'欧阳春晓 | 每日拉伸放松 10min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20拉伸%20放松'},
+    ]
+  },
+  {
+    phase:3, weeks:'第 9–12 周 · 强化打卡',
+    goal:'提升强度与时长，形成稳定运动节奏',
+    videos:[
+      {title:'欧阳春晓 | 全身燃脂 20min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20全身燃脂'},
+      {title:'欧阳春晓 | 体态矫正 12min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20体态矫正'},
+      {title:'欧阳春晓 | 周末长有氧 25min', url:'https://search.bilibili.com/all?keyword=欧阳春晓%20有氧'},
+    ]
+  },
+];
+const EX_PLAN_KEY = 'exercise_plan_start';
+const EX_PLAN_PHASE_KEY = 'exercise_plan_phase';
 const EN_WORDS = [
   {word:'serendipity', phonetic:'/ˌserənˈdɪpəti/', mean:'意外发现的美好；机缘巧合'},
   {word:'resilience', phonetic:'/rɪˈzɪliəns/', mean:'韧性；恢复力'},
@@ -791,6 +915,168 @@ function getDailyWords(list, count){
   }
   return picks;
 }
+
+// ============ 英语学习中心：内置词库与素材 ============
+// 英语子模块：四六级单词 / 复习 / 短句 / 听力 / 口语 / 计划
+const EN_TABS = [
+  {key:'words',    name:'四六级单词', icon:'🔤'},
+  {key:'review',   name:'单词复习',   icon:'🔁'},
+  {key:'phrases',  name:'短句学习',   icon:'💬'},
+  {key:'listen',   name:'听力练习',   icon:'👂'},
+  {key:'speak',    name:'口语跟练',   icon:'🗣️'},
+  {key:'plan',     name:'提升计划',   icon:'🎯'},
+];
+
+// 四级核心词（覆盖高频考点）
+const CET4_WORDS = [
+  {word:'abandon', phonetic:'/əˈbændən/', mean:'v. 抛弃；放弃'},
+  {word:'ability', phonetic:'/əˈbɪləti/', mean:'n. 能力；才能'},
+  {word:'absolute', phonetic:'/ˈæbsəluːt/', mean:'adj. 绝对的；完全的'},
+  {word:'academic', phonetic:'/ˌækəˈdemɪk/', mean:'adj. 学术的；学院的'},
+  {word:'accept', phonetic:'/əkˈsept/', mean:'v. 接受；同意'},
+  {word:'access', phonetic:'/ˈækses/', mean:'n./v. 接近；进入；使用权'},
+  {word:'accident', phonetic:'/ˈæksɪdənt/', mean:'n. 事故；意外'},
+  {word:'accompany', phonetic:'/əˈkʌmpəni/', mean:'v. 陪伴；伴随'},
+  {word:'accomplish', phonetic:'/əˈkʌmplɪʃ/', mean:'v. 完成；实现'},
+  {word:'accurate', phonetic:'/ˈækjərət/', mean:'adj. 准确的；精确的'},
+  {word:'achieve', phonetic:'/əˈtʃiːv/', mean:'v. 达到；实现'},
+  {word:'acquire', phonetic:'/əˈkwaɪə(r)/', mean:'v. 获得；学到'},
+  {word:'active', phonetic:'/ˈæktɪv/', mean:'adj. 积极的；活跃的'},
+  {word:'adequate', phonetic:'/ˈædɪkwət/', mean:'adj. 足够的；适当的'},
+  {word:'admire', phonetic:'/ədˈmaɪə(r)/', mean:'v. 钦佩；欣赏'},
+  {word:'admit', phonetic:'/ədˈmɪt/', mean:'v. 承认；准许进入'},
+  {word:'adopt', phonetic:'/əˈdɒpt/', mean:'v. 采纳；收养'},
+  {word:'advance', phonetic:'/ədˈvɑːns/', mean:'v./n. 前进；进步'},
+  {word:'advantage', phonetic:'/ədˈvɑːntɪdʒ/', mean:'n. 优点；好处'},
+  {word:'advertise', phonetic:'/ˈædvətaɪz/', mean:'v. 做广告；宣传'},
+  {word:'affair', phonetic:'/əˈfeə(r)/', mean:'n. 事务；事情'},
+  {word:'affect', phonetic:'/əˈfekt/', mean:'v. 影响；感动'},
+  {word:'afford', phonetic:'/əˈfɔːd/', mean:'v. 负担得起；提供'},
+  {word:'aggressive', phonetic:'/əˈɡresɪv/', mean:'adj. 好斗的；进取的'},
+  {word:'alcohol', phonetic:'/ˈælkəhɒl/', mean:'n. 酒精；酒'},
+  {word:'ancient', phonetic:'/ˈeɪnʃənt/', mean:'adj. 古代的；古老的'},
+  {word:'anxiety', phonetic:'/æŋˈzaɪəti/', mean:'n. 焦虑；担忧'},
+  {word:'apologize', phonetic:'/əˈpɒlədʒaɪz/', mean:'v. 道歉'},
+  {word:'apparent', phonetic:'/əˈpærənt/', mean:'adj. 明显的；表面的'},
+  {word:'appeal', phonetic:'/əˈpiːl/', mean:'v./n. 呼吁；吸引；上诉'},
+];
+
+// 六级核心词（进阶）
+const CET6_WORDS = [
+  {word:'abolish', phonetic:'/əˈbɒlɪʃ/', mean:'v. 废除；废止'},
+  {word:'abstract', phonetic:'/ˈæbstrækt/', mean:'adj. 抽象的；n. 摘要'},
+  {word:'abundant', phonetic:'/əˈbʌndənt/', mean:'adj. 丰富的；充裕的'},
+  {word:'accumulate', phonetic:'/əˈkjuːmjəleɪt/', mean:'v. 积累；积聚'},
+  {word:'accurate', phonetic:'/ˈækjərət/', mean:'adj. 准确的；精确的'},
+  {word:'adequate', phonetic:'/ˈædɪkwət/', mean:'adj. 足够的；胜任的'},
+  {word:'acute', phonetic:'/əˈkjuːt/', mean:'adj. 严重的；敏锐的；急性的'},
+  {word:'adjacent', phonetic:'/əˈdʒeɪsnt/', mean:'adj. 邻近的；相邻的'},
+  {word:'aggressive', phonetic:'/əˈɡresɪv/', mean:'adj. 侵略性的；有冲劲的'},
+  {word:'ambiguous', phonetic:'/æmˈbɪɡjuəs/', mean:'adj. 模棱两可的'},
+  {word:'ambitious', phonetic:'/æmˈbɪʃəs/', mean:'adj. 有雄心的；野心勃勃的'},
+  {word:'analogy', phonetic:'/əˈnælədʒi/', mean:'n. 类比；相似'},
+  {word:'anticipate', phonetic:'/ænˈtɪsɪpeɪt/', mean:'v. 预期；抢先行动'},
+  {word:'apparent', phonetic:'/əˈpærənt/', mean:'adj. 显然的；表面上的'},
+  {word:'appreciate', phonetic:'/əˈpriːʃieɪt/', mean:'v. 欣赏；感激；增值'},
+  {word:'array', phonetic:'/əˈreɪ/', mean:'n. 数组；一系列；v. 排列'},
+  {word:'articulate', phonetic:'/ɑːˈtɪkjuleɪt/', mean:'adj. 表达清晰的；v. 清晰发音'},
+  {word:'ascend', phonetic:'/əˈsend/', mean:'v. 上升；攀登'},
+  {word:'assess', phonetic:'/əˈses/', mean:'v. 评估；评定'},
+  {word:'assumption', phonetic:'/əˈsʌmpʃn/', mean:'n. 假定；承担'},
+  {word:'attribute', phonetic:'/əˈtrɪbjuːt/', mean:'v. 归因于；n. 属性'},
+  {word:'authentic', phonetic:'/ɔːˈθentɪk/', mean:'adj. 真实的；可靠的'},
+  {word:'biased', phonetic:'/ˈbaɪəst/', mean:'adj. 有偏见的'},
+  {word:'brutal', phonetic:'/ˈbruːtl/', mean:'adj. 残忍的；严酷的'},
+  {word:'coherent', phonetic:'/kəʊˈhɪərənt/', mean:'adj. 连贯的；有条理的'},
+  {word:'compelling', phonetic:'/kəmˈpelɪŋ/', mean:'adj. 引人入胜的；强制的'},
+  {word:'comprehensive', phonetic:'/ˌkɒmprɪˈhensɪv/', mean:'adj. 综合的；广泛的'},
+  {word:'conceive', phonetic:'/kənˈsiːv/', mean:'v. 构想；怀孕'},
+  {word:'conform', phonetic:'/kənˈfɔːm/', mean:'v. 遵守；符合'},
+  {word:'consequence', phonetic:'/ˈkɒnsɪkwəns/', mean:'n. 结果；重要性'},
+];
+
+// 实用短句库
+const EN_PHRASES = [
+  {en:'Could you walk me through this?', cn:'你能带我过一遍这个吗？', scene:'职场沟通'},
+  {en:'Let me circle back to that later.', cn:'我稍后回头再谈这个。', scene:'会议'},
+  {en:'I\'m on the same page with you.', cn:'我和你想的一样。', scene:'协作'},
+  {en:'Could you be more specific?', cn:'能再具体一点吗？', scene:'澄清'},
+  {en:'I\'ll take it from here.', cn:'接下来交给我吧。', scene:'接手'},
+  {en:'That makes sense to me.', cn:'我觉得这说得通。', scene:'认同'},
+  {en:'Let\'s touch base tomorrow.', cn:'我们明天再对接一下。', scene:'跟进'},
+  {en:'I appreciate your patience.', cn:'感谢你的耐心。', scene:'礼貌'},
+  {en:'Where can I improve?', cn:'我哪里还能改进？', scene:'自我提升'},
+  {en:'Thanks for the heads-up.', cn:'谢谢你的提醒。', scene:'致谢'},
+  {en:'I\'m swamped at the moment.', cn:'我现在忙得不可开交。', scene:'状态'},
+  {en:'Could we reschedule?', cn:'我们能改个时间吗？', scene:'改期'},
+  {en:'Let me get back to you on that.', cn:'这事我回头回复你。', scene:'暂缓'},
+  {en:'You\'re doing a great job.', cn:'你做得非常棒。', scene:'鼓励'},
+  {en:'I\'m all ears.', cn:'我洗耳恭听。', scene:'倾听'},
+];
+
+// 听力练习文本（带原文与要点）
+const EN_LISTEN = [
+  {title:'晨间routine', level:'初级', script:'Good morning! I usually wake up at seven, brush my teeth, and then make a cup of coffee. After that, I read for twenty minutes before going to work. What about your morning?', qa:'Q: When does she wake up? A: At seven. / Q: What does she do before work? A: Reads for 20 minutes.'},
+  {title:'职场电话', level:'初级', script:'Hello, this is Anna from the sales team. I\'m calling to confirm our meeting on Friday at three p.m. Does that time still work for you? If not, we can move it to four. Please let me know by email.', qa:'Q: Who is calling? A: Anna from sales. / Q: What time is the meeting? A: Friday 3 p.m.'},
+  {title:'购物对话', level:'中级', script:'Excuse me, do you have this shirt in a larger size? I\'d like to try the blue one in medium. How much is it on sale? Great, I\'ll take two. Can I pay by card?', qa:'Q: What does the customer want? A: A larger blue shirt in medium. / Q: Payment? A: By card.'},
+  {title:'旅行计划', level:'中级', script:'We\'re planning a trip to Hangzhou next month. We\'ll take the high-speed train on Saturday morning, visit the West Lake, and try the local food. On Sunday we\'ll go to a tea village before heading back.', qa:'Q: How will they travel? A: High-speed train. / Q: What on Sunday? A: Tea village.'},
+  {title:'新闻片段', level:'高级', script:'According to the latest report, renewable energy now accounts for nearly thirty percent of the country\'s total power generation, up from twenty percent five years ago, signaling a steady shift toward a greener economy.', qa:'Q: What percentage now? A: Nearly 30%. / Q: Trend? A: Shift to green economy.'},
+];
+
+// 口语跟练话题
+const EN_SPEAK = [
+  {topic:'自我介绍', tip:'用 3 句话介绍：名字 + 职业/专业 + 一个爱好。例：Hi, I\'m Han. I work in design and I love hiking on weekends.'},
+  {topic:'描述一天', tip:'按时间顺序：morning → afternoon → evening，用过去时。例：I finished a report in the morning and met a friend in the evening.'},
+  {topic:'表达观点', tip:'先说观点再给理由：I think... because... 例：I think reading helps because it broadens our mind.'},
+  {topic:'应对尴尬', tip:'用 Sorry / Excuse me 化解。例：Sorry, I didn\'t catch that. Could you repeat?'},
+  {topic:'点餐场景', tip:'I\'d like..., no spicy, please. 例：I\'d like a bowl of noodles, not too salty, please.'},
+  {topic:'拒绝请求', tip:'礼貌地说不：I\'d love to, but I\'m tied up. 例：I\'d love to help, but I have a deadline today.'},
+];
+
+// 权威快速提升计划（文字版，可直接阅读）
+const EN_PLAN_TEXT = `🎯 英语快速提升 · 12 周计划
+
+【原则】每天 30 分钟，听说读写滚动进行，不贪多、重重复。
+
+第 1–4 周 · 打地基
+· 单词：每天 15 个四六级核心词（用「四六级单词」标签，跟读发音）
+· 听力：每天 1 段「听力练习」，先盲听再对照原文
+· 口语：每天 1 个「口语跟练」话题，照着 tip 自己说 3 遍
+· 复习：周末用「单词复习」把本周词过一遍
+
+第 5–8 周 · 提速度
+· 单词：四六级混合，每天 20 个，重点记不熟的
+· 听力：提速到 1.2 倍，尝试听写关键词
+· 口语：用「短句学习」里的职场句做角色扮演
+· 阅读：每天读 1 篇英文新闻（见「新闻热点」）
+
+第 9–12 周 · 冲输出
+· 单词：只复习错词本，不再加新词
+· 听力：直接听播客（见「每日播客」英文类）
+· 口语：每天录 1 分钟自我陈述，回听纠错
+· 输出：用英语写 3 句今日复盘（见「每日复盘」）
+
+✅ 小技巧：把手机系统语言切成英文；遇到生词立刻加到「四六级单词」收藏。`;
+
+// 英语子标签状态（内存）
+let EN_CURRENT_TAB = 'words';
+let EN_WORDS_LEVEL = 'cet4'; // cet4 / cet6
+
+// ============ 职场提升：内置文章库 ============
+const WORKPLACE_ARTICLES = [
+  {cat:'注意事项', title:'汇报工作用「结论先行」', body:'先说结果和结论，再展开过程。领导时间紧，30 秒能讲清重点的人更受信任。结构：结论 → 关键数据 → 风险与建议。'},
+  {cat:'注意事项', title:'微信回复别只发「收到」', body:'收到重要事项时，顺手回一句「收到，今天 18 点前给您初稿」比单纯「收到」更让人安心，也体现你对节点的掌控。'},
+  {cat:'注意事项', title:'开会带结论，不带情绪', body:'会上争论时，把「你怎么这样」换成「我们目标是 X，当前卡在 Y，建议 Z」。对事不对人，专业形象立得住。'},
+  {cat:'金句', title:'靠谱 = 凡事有交代，件件有着落', body:'成年人最顶级的自律，是把答应的事闭环。进度同步、结果反馈，比能力强更稀缺。'},
+  {cat:'金句', title:'向上管理不是拍马屁', body:'主动同步风险、管理领导预期，是职业素养。等出问题再解释，信任就打折了。'},
+  {cat:'金句', title:'把「我不会」换成「我可以学」', body:'新人最大的敌人是自我设限。承认不会不可怕，怕的是把不会变成拒绝成长的借口。'},
+  {cat:'情商故事', title:'同事抢功，她这样破局', body:'小琳的项目被同事在周会「顺走」汇报。她没当场撕破脸，而是会后补发邮件：「感谢补充，补充下我这边完整数据如下…」既留痕又优雅。情商不是忍，是赢得漂亮。'},
+  {cat:'情商故事', title:'老板发火，他做对了一件事', body:'被当众批评，阿强先点头说「这事确实我疏忽了，我下午给您补救方案」。没有辩解、没有情绪，老板反而后来私聊道歉。先接住情绪，再解决问题。'},
+  {cat:'情商故事', title:'新人请吃饭的学问', body:'入职两周，小雨请带教前辈喝了杯咖啡而非大餐：「想谢谢您这段时间的指点。」轻量、真诚、不欠人情，关系反而更近。人情债，宜小不宜大。'},
+];
+
+let WP_ARTICLE_INDEX = 0;
+
 
 // ============ 工具函数 ============
 const today = ()=> new Date().toISOString().slice(0,10);
@@ -1160,6 +1446,10 @@ function renderAllPages(){
 function renderPage(id){
   const el = $('content_'+id);
   if(!el) return;
+  // 英语中心 / 职场 / 运动 使用专属渲染
+  if(id==='english'){ renderEnglishCenter(el); return; }
+  if(id==='workplace'){ renderWorkplaceCenter(el); return; }
+  if(id==='exercise'){ renderExerciseCenter(el); return; }
   const menu = MENUS.find(m=>m.id===id);
   const items = Store.get('data_'+id, []);
 
@@ -1192,18 +1482,10 @@ function renderPage(id){
 
   // 输入区
   html += renderInput(id, menu);
-  // 每日词汇（英语）
-  if(id==='english'){
-    html += `<div id="dailyWordsSlot_${id}"></div>`;
-  }
   // 列表
   html += `<div id="list_${id}">${renderList(id, items)}</div>`;
   el.innerHTML = html;
 
-  // 渲染每日词汇
-  if(id==='english'){
-    renderDailyWords(id);
-  }
   // 渲染今日新闻
   if(id==='news'){
     renderTodayNews();
@@ -1213,6 +1495,371 @@ function renderPage(id){
 // 判断记录是否非今日（用于区分每日摄入/消耗）
 function isOldDate(timeStr){
   return false; // 暂不区分日期，按全部累计；如需每日重置可后续扩展
+}
+
+// ============ 英语学习中心 ============
+function renderEnglishCenter(el){
+  const tabs = EN_TABS.map(t=>`<button class="en-tab ${EN_CURRENT_TAB===t.key?'active':''}" onclick="switchEnTab('${t.key}')">${t.icon} ${t.name}</button>`).join('');
+  el.innerHTML = `
+    <div class="en-tabs">${tabs}</div>
+    <div id="enTabBody"></div>
+  `;
+  renderEnTabBody();
+}
+
+function switchEnTab(key){
+  EN_CURRENT_TAB = key;
+  renderEnglishCenter($('content_english'));
+}
+
+function renderEnTabBody(){
+  const body = $('enTabBody');
+  if(!body) return;
+  switch(EN_CURRENT_TAB){
+    case 'words':    return renderEnWords(body);
+    case 'review':   return renderEnReview(body);
+    case 'phrases':  return renderEnPhrases(body);
+    case 'listen':   return renderEnListen(body);
+    case 'speak':    return renderEnSpeak(body);
+    case 'plan':     return renderEnPlan(body);
+  }
+}
+
+// 四六级单词
+function renderEnWords(body){
+  const bank = EN_WORDS_LEVEL==='cet4' ? CET4_WORDS : CET6_WORDS;
+  const words = getDailyWords(bank, 8);
+  const fav = Store.get('data_english_words', []);
+  const favWords = fav.map(f=>f.text);
+  body.innerHTML = `
+    <div class="en-level-switch">
+      <button class="en-lvl ${EN_WORDS_LEVEL==='cet4'?'active':''}" onclick="setEnLevel('cet4')">📘 四级核心</button>
+      <button class="en-lvl ${EN_WORDS_LEVEL==='cet6'?'active':''}" onclick="setEnLevel('cet6')">📙 六级核心</button>
+      <span class="en-lvl-tip">每天 8 个 · 点 🔊 跟读</span>
+    </div>
+    <div class="en-word-list">
+      ${words.map(w=>{
+        const saved = favWords.indexOf(w.word)>=0;
+        return `<div class="en-word">
+          <div class="en-word-main">
+            <span class="en-word-t">${w.word}</span>
+            <span class="en-word-p">${w.phonetic}</span>
+            <span class="en-word-m">${w.mean}</span>
+          </div>
+          <div class="en-word-acts">
+            <button class="en-ic" onclick="speakWord('en','${w.word.replace(/'/g,"\\'")}')">🔊</button>
+            <button class="en-ic ${saved?'saved':''}" onclick="toggleEnWord('${w.word.replace(/'/g,"\\'")}','${w.phonetic.replace(/'/g,"\\'")}','${w.mean.replace(/'/g,"\\'")}')">${saved?'⭐':'☆'}</button>
+          </div>
+        </div>`;
+      }).join('')}
+    </div>
+    <div class="en-saved-box">
+      <div class="en-saved-title">⭐ 我的生词本（${fav.length}）</div>
+      ${fav.length? fav.slice().reverse().map((f,idx)=>{
+        const ri = fav.length-1-idx;
+        return `<div class="en-saved-item">
+          <span onclick="speakWord('en','${f.text.replace(/'/g,"\\'")}')" style="cursor:pointer">${f.text}</span>
+          <span class="en-saved-m">${f.mean||''}</span>
+          <button class="item-del" onclick="delEnWord(${ri})">✕</button>
+        </div>`;
+      }).join('') : '<div class="empty-sm">还没有收藏，点 ☆ 加入��词本~</div>'}
+    </div>
+  `;
+}
+
+function setEnLevel(lv){
+  EN_WORDS_LEVEL = lv;
+  renderEnTabBody();
+}
+
+function toggleEnWord(word, phonetic, mean){
+  const key='data_english_words';
+  const arr = Store.get(key, []);
+  const i = arr.findIndex(x=>x.text===word);
+  if(i>=0){ arr.splice(i,1); showToast('已移出生词本'); }
+  else { arr.push({text:word, mean:phonetic+' '+mean, done:false, date:today()}); showToast('已加入生词本 ⭐'); }
+  Store.set(key, arr);
+  renderNav();
+  renderEnTabBody();
+}
+
+function delEnWord(idx){
+  const key='data_english_words';
+  const arr = Store.get(key, []);
+  arr.splice(idx,1);
+  Store.set(key, arr);
+  renderNav();
+  renderEnTabBody();
+}
+
+// 单词复习（生词本抽考）
+function renderEnReview(body){
+  const fav = Store.get('data_english_words', []);
+  if(!fav.length){
+    body.innerHTML = `<div class="empty"><div class="empty-icon">🌸</div>生词本还是空的，先去「四六级单词」收藏几个吧~</div>`;
+    return;
+  }
+  const picks = getDailyWords(fav, Math.min(5, fav.length));
+  body.innerHTML = `
+    <div class="en-review-tip">🔁 遮住释义自测，点「看答案」核对 · 共 ${fav.length} 个生词</div>
+    <div class="en-review-list">
+      ${picks.map((w,idx)=>`
+        <div class="en-review-item">
+          <div class="en-review-word">
+            <span onclick="speakWord('en','${w.text.replace(/'/g,"\\'")}')" style="cursor:pointer">${w.text}</span>
+            <button class="en-ic" onclick="speakWord('en','${w.text.replace(/'/g,"\\'")}')">🔊</button>
+            <button class="en-ic" onclick="toggleReveal(${idx})">👁 看答案</button>
+          </div>
+          <div class="en-review-ans" id="revAns_${idx}" style="display:none;">${w.mean||''}</div>
+        </div>
+      `).join('')}
+    </div>
+    <button class="en-refresh-btn" onclick="renderEnTabBody()">🔄 换一批自测</button>
+  `;
+}
+
+function toggleReveal(idx){
+  const el = $('revAns_'+idx);
+  if(el) el.style.display = el.style.display==='none' ? 'block' : 'none';
+}
+
+// 短句学习
+function renderEnPhrases(body){
+  body.innerHTML = `
+    <div class="en-phrase-tip">💬 跟读短句，点 🔊 听发音，试着用在对话里</div>
+    <div class="en-phrase-list">
+      ${EN_PHRASES.map(p=>`
+        <div class="en-phrase">
+          <div class="en-phrase-en" onclick="speakWord('en','${p.en.replace(/'/g,"\\'")}')">${p.en}</div>
+          <div class="en-phrase-cn">${p.cn}</div>
+          <div class="en-phrase-foot">
+            <span class="en-phrase-scene">🏷 ${p.scene}</span>
+            <button class="en-ic" onclick="speakWord('en','${p.en.replace(/'/g,"\\'")}')">🔊</button>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// 听力练习
+function renderEnListen(body){
+  body.innerHTML = `
+    <div class="en-listen-tip">👂 先盲听，再对照原文；点 🔊 可逐段朗读</div>
+    <div class="en-listen-list">
+      ${EN_LISTEN.map((l,idx)=>`
+        <div class="en-listen">
+          <div class="en-listen-head">
+            <span class="en-listen-title">🎧 ${l.title}</span>
+            <span class="en-listen-level">${l.level}</span>
+          </div>
+          <div class="en-listen-script">${l.script}</div>
+          <button class="en-ic" onclick="speakWord('en','${l.script.replace(/'/g,"\\'")}')">🔊 朗读全文</button>
+          <div class="en-listen-qa"><b>自测：</b>${l.qa}</div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// 口语跟练
+function renderEnSpeak(body){
+  body.innerHTML = `
+    <div class="en-speak-tip">🗣️ 选一个话题，照着提示自己说 3 遍，用手机录下来回听</div>
+    <div class="en-speak-list">
+      ${EN_SPEAK.map(s=>`
+        <div class="en-speak">
+          <div class="en-speak-topic">💡 ${s.topic}</div>
+          <div class="en-speak-tip-text">${s.tip}</div>
+          <button class="en-ic" onclick="speakWord('en','${s.tip.replace(/'/g,"\\'")}')">🔊 朗读提示</button>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// 提升计划
+function renderEnPlan(body){
+  body.innerHTML = `
+    <div class="en-plan-box">
+      <pre class="en-plan-text">${EN_PLAN_TEXT}</pre>
+    </div>
+  `;
+}
+
+// ============ 职场提升中心 ============
+function renderWorkplaceCenter(el){
+  const art = WORKPLACE_ARTICLES[WP_ARTICLE_INDEX % WORKPLACE_ARTICLES.length];
+  const checkins = Store.get('data_workplace', []);
+  const doneToday = checkins.filter(c=>c.date===today() && c.done).length;
+  const total = checkins.length;
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-mini"><div class="stat-mini-value">${doneToday>0?'✅':'☀️'}</div><div class="stat-mini-label">📅 今日打卡</div></div>
+      <div class="stat-mini"><div class="stat-mini-value">${total}</div><div class="stat-mini-label">📋 累计打卡</div></div>
+      <div class="stat-mini"><div class="stat-mini-value">${WORKPLACE_ARTICLES.length}</div><div class="stat-mini-label">📚 锦囊数</div></div>
+    </div>
+
+    <div class="wp-push-card">
+      <div class="wp-push-head">
+        <span class="wp-push-cat">${art.cat}</span>
+        <span class="wp-push-title">${art.title}</span>
+      </div>
+      <div class="wp-push-body">${art.body}</div>
+      <button class="wp-push-btn" onclick="wpNextArticle()">🔄 换一篇</button>
+    </div>
+
+    <div class="input-box">
+      <input type="text" id="inp_workplace_word" placeholder="今日职场小行动（如：主动同步一次进度）" style="flex:1">
+      <button class="btn-add" onclick="addWorkplace()">➕ 打卡</button>
+    </div>
+    <div id="list_workplace">${renderWorkplaceList(checkins)}</div>
+  `;
+}
+
+function wpNextArticle(){
+  WP_ARTICLE_INDEX = (WP_ARTICLE_INDEX + 1) % WORKPLACE_ARTICLES.length;
+  renderWorkplaceCenter($('content_workplace'));
+}
+
+function addWorkplace(){
+  const el = $('inp_workplace_word');
+  const text = el ? el.value.trim() : '';
+  if(!text){ showToast('请输入今天的职场小行动~'); return; }
+  const arr = Store.get('data_workplace', []);
+  arr.push({ text, done:true, date: today() });
+  Store.set('data_workplace', arr);
+  if(el) el.value='';
+  renderWorkplaceCenter($('content_workplace'));
+  renderNav();
+  showToast('职场打卡 +1 💼');
+}
+
+function renderWorkplaceList(items){
+  if(!items.length) return `<div class="empty"><div class="empty-icon">🌸</div>还没有打卡记录，写下今天的职场小行动吧~</div>`;
+  return items.slice().reverse().map((item,idx)=>{
+    const ri = items.length-1-idx;
+    return `<div class="list-item done">
+      <div class="item-check checked">✓</div>
+      <span class="item-text">${item.text}</span>
+      <span class="item-time">${item.date||''}</span>
+      <button class="item-del" onclick="delWorkplace(${ri})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function delWorkplace(idx){
+  const arr = Store.get('data_workplace', []);
+  arr.splice(idx,1);
+  Store.set('data_workplace', arr);
+  renderWorkplaceCenter($('content_workplace'));
+  renderNav();
+  showToast('已删除~');
+}
+
+// ============ 运动锻炼中心：欧阳春晓计划 ============
+function getExPhase(){
+  // 每 3 个月推进一阶（基于 plan_start 计算）
+  let start = Store.get(EX_PLAN_KEY, '');
+  if(!start){
+    start = today();
+    Store.set(EX_PLAN_KEY, start);
+  }
+  const months = Math.floor((new Date(today()) - new Date(start)) / (1000*60*60*24*30));
+  let phase = Math.floor(months / 3); // 0→第1阶,1→第2阶,2→第3阶
+  if(phase > EXERCISE_PLAN.length-1) phase = EXERCISE_PLAN.length-1;
+  Store.set(EX_PLAN_PHASE_KEY, phase);
+  return phase;
+}
+
+function renderExerciseCenter(el){
+  const phase = getExPhase();
+  const plan = EXERCISE_PLAN[phase];
+  const checkins = Store.get('data_exercise', []);
+  const doneToday = checkins.filter(c=>c.date===today()).length;
+  const total = checkins.length;
+  const sumKcal = checkins.reduce((s,i)=> s + (i.kcal||0), 0);
+
+  el.innerHTML = `
+    <div class="stats-row">
+      <div class="stat-mini"><div class="stat-mini-value">${doneToday>0?'🔥':'🌱'}</div><div class="stat-mini-label">📅 今日打卡</div></div>
+      <div class="stat-mini"><div class="stat-mini-value">${total}</div><div class="stat-mini-label">📋 累计次</div></div>
+      <div class="stat-mini"><div class="stat-mini-value">${sumKcal}</div><div class="stat-mini-label">🔥 总消耗</div></div>
+    </div>
+
+    <div class="ex-phase-card">
+      <div class="ex-phase-head">
+        <span class="ex-phase-badge">阶段 ${plan.phase}/3</span>
+        <span class="ex-phase-weeks">${plan.weeks}</span>
+      </div>
+      <div class="ex-phase-goal">🎯 ${plan.goal}</div>
+      <div class="ex-video-title">🎬 今日跟练（点击直接打开视频）</div>
+      <div class="ex-video-list">
+        ${plan.videos.map(v=>`
+          <a class="ex-video" href="${v.url}" target="_blank" rel="noopener">▶ ${v.title}</a>
+        `).join('')}
+      </div>
+      <button class="ex-replan-btn" onclick="exReplan()">🔄 重新制定计划</button>
+    </div>
+
+    <div class="input-box">
+      <input type="text" id="inp_exercise_word" placeholder="今日运动（如：跟练马甲线 15min）" style="flex:1">
+      <input type="number" id="inp_exercise_kcal" placeholder="消耗kcal" style="flex:0.5">
+      <button class="btn-add" onclick="addExerciseCheckin()">➕ 打卡</button>
+    </div>
+    <div id="list_exercise">${renderExerciseList(checkins)}</div>
+  `;
+}
+
+function exReplan(){
+  // 手动进入下一阶（循环）；同时记录新的起始日
+  let phase = Store.get(EX_PLAN_PHASE_KEY, 0);
+  phase = (phase + 1) % EXERCISE_PLAN.length;
+  Store.set(EX_PLAN_PHASE_KEY, phase);
+  Store.set(EX_PLAN_KEY, today()); // 新阶段从今天算起
+  renderExerciseCenter($('content_exercise'));
+  showToast('已切换到阶段 ' + (phase+1) + ' 💪');
+}
+
+function addExerciseCheckin(){
+  const el = $('inp_exercise_word');
+  const kcalEl = $('inp_exercise_kcal');
+  const text = el ? el.value.trim() : '';
+  if(!text){ showToast('请输入今日运动~'); return; }
+  let kcal = kcalEl ? parseInt(kcalEl.value,10) : NaN;
+  if(isNaN(kcal) || kcal<0) kcal = 0;
+  const arr = Store.get('data_exercise', []);
+  arr.push({ text, kcal, done:true, date: today() });
+  Store.set('data_exercise', arr);
+  if(el) el.value='';
+  if(kcalEl) kcalEl.value='';
+  renderExerciseCenter($('content_exercise'));
+  renderNav();
+  showToast('运动打卡 +1 🔥');
+}
+
+function renderExerciseList(items){
+  if(!items.length) return `<div class="empty"><div class="empty-icon">🌸</div>还没有打卡记录，今天就跟练一节吧~</div>`;
+  return items.slice().reverse().map((item,idx)=>{
+    const ri = items.length-1-idx;
+    const tag = item.kcal ? `<span class="item-tag">${item.kcal}kcal</span>` : '';
+    return `<div class="list-item done">
+      <div class="item-check checked">✓</div>
+      <span class="item-text">${item.text}</span>
+      ${tag}
+      <span class="item-time">${item.date||''}</span>
+      <button class="item-del" onclick="delExercise(${ri})">✕</button>
+    </div>`;
+  }).join('');
+}
+
+function delExercise(idx){
+  const arr = Store.get('data_exercise', []);
+  arr.splice(idx,1);
+  Store.set('data_exercise', arr);
+  renderExerciseCenter($('content_exercise'));
+  renderNav();
+  showToast('已删除~');
 }
 
 function renderInput(id, menu){
