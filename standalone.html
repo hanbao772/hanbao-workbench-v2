@@ -2649,7 +2649,9 @@ function init(){
       history.replaceState(null, '', cleanUrl);
     }
   }catch(e){}
-    window.addEventListener('beforeinstallprompt', function(e){
+  // SW 注册已禁用（standalone 模式）
+  // 捕获浏览器「可安装」事件，展示安装引导
+  window.addEventListener('beforeinstallprompt', function(e){
     e.preventDefault();
     window.__deferredPrompt = e;
     showInstallBanner();
